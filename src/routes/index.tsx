@@ -1,6 +1,12 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { motion } from "framer-motion";
 import { useState } from "react";
+import logoAsset from "@/assets/logo.png.asset.json";
+import paivaAsset from "@/assets/paiva.jpeg.asset.json";
+import fb1Asset from "@/assets/fb1.jpeg.asset.json";
+import fb2Asset from "@/assets/fb2.jpeg.asset.json";
+import fb3Asset from "@/assets/fb3.jpeg.asset.json";
+import fb4Asset from "@/assets/fb4.jpeg.asset.json";
 import {
   Crosshair,
   Target,
@@ -18,6 +24,9 @@ import {
   Lightning,
   ShieldCheck,
   TrendUp,
+  Quotes,
+  Star,
+  Fire,
 } from "@phosphor-icons/react";
 
 export const Route = createFileRoute("/")({
@@ -46,14 +55,8 @@ const fadeUp = {
 
 function Logo({ className = "" }: { className?: string }) {
   return (
-    <div className={`flex items-center gap-2.5 ${className}`}>
-      <div className="relative">
-        <Crosshair size={28} weight="bold" className="text-[#cc1f1f]" />
-      </div>
-      <span className="font-display font-extrabold text-xl tracking-wider uppercase leading-none">
-        <span className="text-white">Alvo</span>
-        <span className="text-[#cc1f1f]"> Policial</span>
-      </span>
+    <div className={`flex items-center ${className}`}>
+      <img src={logoAsset.url} alt="Alvo Policial" className="h-9 md:h-10 w-auto" />
     </div>
   );
 }
@@ -63,7 +66,8 @@ function Navbar() {
   const links = [
     { label: "Método", href: "#metodo" },
     { label: "Planos", href: "#planos" },
-    { label: "Depoimentos", href: "#missao" },
+    { label: "Feedbacks", href: "#feedbacks" },
+    { label: "Paiva", href: "#paiva" },
     { label: "Contato", href: "#contato" },
   ];
   return (
