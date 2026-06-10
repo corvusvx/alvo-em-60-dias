@@ -503,6 +503,170 @@ function FAQ() {
   );
 }
 
+function CTABand({ headline, sub, button = "Quero começar agora" }: { headline: string; sub?: string; button?: string }) {
+  return (
+    <section className="relative border-y border-[#cc1f1f]/30 bg-gradient-to-r from-[#0a0a0a] via-[#1a0707] to-[#0a0a0a] overflow-hidden">
+      <div className="absolute inset-0 opacity-[0.05] pointer-events-none" style={{ backgroundImage: "linear-gradient(#cc1f1f 1px, transparent 1px), linear-gradient(90deg, #cc1f1f 1px, transparent 1px)", backgroundSize: "40px 40px" }} />
+      <div className="relative max-w-[1280px] mx-auto px-4 md:px-8 py-10 md:py-12 flex flex-col md:flex-row items-center justify-between gap-6">
+        <div>
+          <div className="flex items-center gap-2 text-[10px] font-mono uppercase tracking-[0.3em] text-[#cc1f1f]">
+            <Fire size={14} weight="fill" /> Vagas limitadas · turma em andamento
+          </div>
+          <h3 className="mt-2 font-display font-extrabold uppercase tracking-tight text-white text-2xl md:text-3xl leading-tight">
+            {headline}
+          </h3>
+          {sub && <p className="mt-2 text-[#a0a0a0] text-sm max-w-2xl">{sub}</p>}
+        </div>
+        <a
+          href={PLAN_PMAL_URL}
+          target="_blank" rel="noopener noreferrer"
+          className="shrink-0 inline-flex items-center justify-center gap-2 bg-[#cc1f1f] hover:bg-[#e82222] text-white font-bold uppercase tracking-wider text-sm px-7 py-4 rounded-sm transition-all active:scale-[0.98] shadow-lg shadow-[#cc1f1f]/30"
+        >
+          {button} <ArrowRight size={16} weight="bold" />
+        </a>
+      </div>
+    </section>
+  );
+}
+
+function AboutPaiva() {
+  return (
+    <section id="paiva" className="py-24 md:py-32 relative overflow-hidden">
+      <div className="absolute inset-0 pointer-events-none" style={{ background: "radial-gradient(ellipse at left, #cc1f1f15 0%, transparent 55%)" }} />
+      <div className="relative max-w-[1280px] mx-auto px-4 md:px-8 grid lg:grid-cols-[1fr_1.2fr] gap-12 lg:gap-16 items-center">
+        <motion.div
+          initial={{ opacity: 0, x: -24 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.7 }}
+          className="relative max-w-md mx-auto lg:mx-0 w-full"
+        >
+          <div className="absolute -inset-2 border border-[#cc1f1f]/40" />
+          <div className="absolute -top-3 -left-3 w-8 h-8 border-t-2 border-l-2 border-[#cc1f1f]" />
+          <div className="absolute -top-3 -right-3 w-8 h-8 border-t-2 border-r-2 border-[#cc1f1f]" />
+          <div className="absolute -bottom-3 -left-3 w-8 h-8 border-b-2 border-l-2 border-[#cc1f1f]" />
+          <div className="absolute -bottom-3 -right-3 w-8 h-8 border-b-2 border-r-2 border-[#cc1f1f]" />
+          <img
+            src={paivaAsset.url}
+            alt="Paiva — Instrutor Alvo Policial"
+            className="relative w-full aspect-[3/4] object-cover grayscale contrast-[1.05] brightness-90"
+          />
+          <div className="absolute bottom-4 left-4 right-4 flex items-end justify-between font-mono uppercase tracking-widest text-[10px] text-white">
+            <span className="bg-[#cc1f1f] px-2 py-1">Paiva</span>
+            <span className="bg-black/70 px-2 py-1">Instrutor · PM</span>
+          </div>
+        </motion.div>
+
+        <div>
+          <span className="text-[10px] font-semibold uppercase tracking-[0.3em] text-[#cc1f1f] font-mono">⊕ Quem te treina</span>
+          <h2 className="mt-4 font-display font-bold uppercase tracking-tight text-white text-4xl md:text-5xl leading-[0.95]">
+            Paiva. <span className="text-[#cc1f1f]">Policial</span><br />que já trilhou
+            <br />o caminho.
+          </h2>
+          <p className="mt-6 text-[#a0a0a0] leading-relaxed text-lg">
+            Quem te ensina precisa ter andado pelo mesmo terreno. Paiva é policial militar, criou o método <span className="text-white font-semibold">Alvo Policial</span> depois de descobrir, na própria pele, o que separa o aprovado do reprovado: <span className="text-white">direção, método e disciplina</span>.
+          </p>
+          <p className="mt-4 text-[#a0a0a0] leading-relaxed">
+            Hoje, centenas de alunos seguem o cronograma de 60 dias e chegam à prova sabendo exatamente o que cai, como revisar e como executar no dia D.
+          </p>
+          <div className="mt-8 flex flex-col sm:flex-row gap-4">
+            <a
+              href={PLAN_PMAL_URL}
+              target="_blank" rel="noopener noreferrer"
+              className="inline-flex items-center justify-center gap-2 bg-[#cc1f1f] hover:bg-[#e82222] text-white font-semibold uppercase tracking-wider text-sm px-7 py-3.5 rounded-sm transition-all active:scale-[0.98]"
+            >
+              Treinar com o Paiva <ArrowRight size={14} weight="bold" />
+            </a>
+            <a
+              href={WHATSAPP_URL}
+              target="_blank" rel="noopener noreferrer"
+              className="inline-flex items-center justify-center gap-2 border border-[#cc1f1f] text-[#cc1f1f] hover:bg-[#cc1f1f] hover:text-white font-semibold uppercase tracking-wider text-sm px-7 py-3.5 rounded-sm transition-all"
+            >
+              <WhatsappLogo size={16} weight="fill" /> Falar agora
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function Feedbacks() {
+  const items = [
+    { src: fb3Asset.url, name: "Aluno PMAL", quote: "Fiz um simulado hoje e fiquei com 81 pontos líquidos. Estou muito feliz seguindo o cronograma de 60 dias." },
+    { src: fb2Asset.url, name: "João", quote: "Finalizei o simulado de hoje. Acertei 99 das 103 questões que respondi, com apenas 4 erros." },
+    { src: fb1Asset.url, name: "Aluno Mentoria", quote: "Desde a mentoria estou aplicando as dicas de estudo e resolução de questões. Estou memorizando muito mais o conteúdo." },
+    { src: fb4Asset.url, name: "Matheus", quote: "É muito diferente estudar assim, parece que grupa igual cola. Mano é surreal como facilita o estudo." },
+  ];
+  return (
+    <section id="feedbacks" className="py-24 md:py-32 bg-[#0d0d0d] border-y border-[#1f1f1f] relative overflow-hidden">
+      <div className="absolute inset-0 pointer-events-none" style={{ background: "radial-gradient(ellipse at top right, #cc1f1f15 0%, transparent 55%)" }} />
+      <div className="relative max-w-[1280px] mx-auto px-4 md:px-8">
+        <div className="grid lg:grid-cols-[1fr_2fr] gap-12 items-end mb-14">
+          <div>
+            <span className="text-[10px] font-semibold uppercase tracking-[0.3em] text-[#cc1f1f] font-mono">⊕ Quem aplicou, aprovou o método</span>
+            <h2 className="mt-4 font-display font-bold uppercase tracking-tight text-white text-4xl md:text-5xl leading-[0.95]">
+              Resultados <span className="text-[#cc1f1f]">reais</span>,<br />não promessas.
+            </h2>
+          </div>
+          <div className="lg:pl-12 lg:border-l border-[#2a2a2a]">
+            <div className="flex items-center gap-2 mb-3">
+              {Array.from({ length: 5 }).map((_, i) => (
+                <Star key={i} size={18} weight="fill" className="text-[#cc1f1f]" />
+              ))}
+              <span className="ml-2 font-mono text-xs text-[#a0a0a0] uppercase tracking-widest">Avaliação dos alunos</span>
+            </div>
+            <p className="text-[#a0a0a0] leading-relaxed">
+              Esses são prints reais de alunos que estão seguindo o método. Sem atores, sem montagem — só disciplina aplicada.
+            </p>
+          </div>
+        </div>
+
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {items.map((it, i) => (
+            <motion.figure
+              key={i}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ delay: i * 0.08 }}
+              className="bg-[#111111] border border-[#2a2a2a] rounded-sm overflow-hidden flex flex-col group hover:border-[#cc1f1f]/50 transition-colors"
+            >
+              <div className="relative bg-black">
+                <img src={it.src} alt={`Feedback de ${it.name}`} className="w-full h-56 object-cover object-top" loading="lazy" />
+                <div className="absolute top-2 left-2 bg-[#25D366] text-white text-[9px] font-mono uppercase tracking-widest px-2 py-1 flex items-center gap-1">
+                  <WhatsappLogo size={10} weight="fill" /> Real
+                </div>
+              </div>
+              <figcaption className="p-5 flex-1 flex flex-col">
+                <Quotes size={20} weight="fill" className="text-[#cc1f1f]" />
+                <blockquote className="mt-3 text-sm text-[#e5e5e5] leading-relaxed flex-1">"{it.quote}"</blockquote>
+                <div className="mt-4 pt-4 border-t border-[#2a2a2a] flex items-center justify-between">
+                  <span className="font-mono text-[10px] uppercase tracking-widest text-[#606060]">— {it.name}</span>
+                  <Target size={14} weight="fill" className="text-[#cc1f1f]" />
+                </div>
+              </figcaption>
+            </motion.figure>
+          ))}
+        </div>
+
+        <div className="mt-14 text-center">
+          <a
+            href={PLAN_PMAL_URL}
+            target="_blank" rel="noopener noreferrer"
+            className="inline-flex items-center justify-center gap-2 bg-[#cc1f1f] hover:bg-[#e82222] text-white font-bold uppercase tracking-wider text-sm px-8 py-4 rounded-sm transition-all active:scale-[0.98] shadow-lg shadow-[#cc1f1f]/30"
+          >
+            Eu também quero esse resultado <ArrowRight size={16} weight="bold" />
+          </a>
+          <p className="mt-3 text-xs font-mono uppercase tracking-widest text-[#606060]">
+            Acesso imediato · pagamento seguro
+          </p>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function FinalCTA() {
   return (
     <section id="contato" className="py-24 md:py-32 relative overflow-hidden">
