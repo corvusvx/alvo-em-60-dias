@@ -41,7 +41,7 @@ const INSTAGRAM_URL = "https://www.instagram.com/paiva.alvopolicial/";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 24 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] } },
+  show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" as const } },
 };
 
 function Logo({ className = "" }: { className?: string }) {
