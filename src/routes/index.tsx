@@ -28,10 +28,10 @@ import {
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Alvo Policial — Mentoria para Concursos Públicos" },
-      { name: "description", content: "Mentoria individual e cursos com Matheus Paiva para concursos públicos. Planos para PM em todo o Brasil — e novas carreiras em breve. Suporte direto no WhatsApp." },
-      { property: "og:title", content: "Alvo Policial — Mentoria para Concursos Públicos" },
-      { property: "og:description", content: "Passe no seu concurso com mentoria individual, cursos por edital e acompanhamento direto com Matheus Paiva." },
+      { title: "Alvo Policial — Seja aprovado com o Paiva" },
+      { name: "description", content: "Seja aprovado no concurso dos seus sonhos com o Paiva. Policial militar, aprovado aos 17, hoje ajuda milhares de candidatos com direção, material de qualidade e mentoria no WhatsApp." },
+      { property: "og:title", content: "Alvo Policial — Seja aprovado com o Paiva" },
+      { property: "og:description", content: "Concurso público exige direção e material de qualidade. O Paiva entrega os dois — cursos, simulados, bancos de questões e mentoria até a prova." },
     ],
     links: [{ rel: "canonical", href: "/" }],
   }),
@@ -45,7 +45,7 @@ const PMPE_URL = "https://clkdmg.site/pay/paiva-pmpe";
 const PMBA_URL = "https://clkdmg.site/pay/paiva-pmba";
 const PMSP_URL = "https://clkdmg.site/pay/paiva-pmesp";
 const PREMIUM_URL = "https://clkdmg.site/pay/pm-premium-paiva";
-const PLAN_PMAL_URL = MENTORIA_URL;
+const PLAN_PMAL_URL = PREMIUM_URL;
 const INSTAGRAM_URL = "https://www.instagram.com/paiva.alvopolicial/";
 
 const LOGO_SRC = "/logo.png";
@@ -149,18 +149,20 @@ function Hero() {
             <span className="text-[10px] font-semibold uppercase tracking-[0.15em] sm:tracking-[0.2em] text-[#f5f5f5]">Concursos públicos · Mentoria · Cursos</span>
           </motion.div>
 
-          <motion.h1 variants={fadeUp} className="font-display font-extrabold uppercase tracking-tight text-white leading-[0.92] text-[2.5rem] sm:text-5xl md:text-7xl lg:text-8xl text-balance">
-            Passe no concurso
+          <motion.h1 variants={fadeUp} className="font-display font-extrabold uppercase tracking-tight text-white leading-[0.92] text-[2.25rem] sm:text-5xl md:text-6xl lg:text-7xl text-balance">
+            Seja aprovado no concurso
             <br />
-            <span className="text-[#cc1f1f]">com o Paiva.</span>
+            dos seus sonhos
+            <br />
+            <span className="text-[#cc1f1f]">ainda esse ano, com o Paiva.</span>
           </motion.h1>
 
           <motion.p variants={fadeUp} className="mt-6 sm:mt-8 text-base sm:text-lg md:text-xl text-[#a0a0a0] max-w-[55ch] leading-relaxed">
-            Matheus Paiva ajuda candidatos de <span className="text-white font-medium">concurso público</span> com mentoria individual e cursos completos — hoje com planos para <span className="text-white font-medium">PMAL, PMPE, PMBA, PMSP</span> e Premium.
+            <span className="text-white font-medium">Policial militar</span>, aprovado aos 17 anos — já passou pelo que você está passando. Hoje o Paiva ajuda <span className="text-white font-medium">milhares de candidatos</span> a conquistarem o sonho da aprovação com direção, material de qualidade e mentoria no WhatsApp.
           </motion.p>
 
           <motion.p variants={fadeUp} className="mt-3 text-sm sm:text-base text-[#606060] max-w-[55ch] leading-relaxed">
-            Cronograma do seu edital, correção semanal e suporte até a prova. Novos planos e carreiras entram no hub conforme os editais abrem.
+            Concurso público exige direção e material de qualidade — é exatamente isso que ele entrega. Cronograma do seu edital, correção semanal e suporte até a prova.
           </motion.p>
 
           <motion.div variants={fadeUp} className="mt-8 sm:mt-10 flex flex-col sm:flex-row gap-3 sm:gap-4">
@@ -182,9 +184,9 @@ function Hero() {
           <motion.div variants={fadeUp} className="mt-8 sm:mt-12 flex flex-wrap items-center gap-x-4 sm:gap-x-6 gap-y-3 text-[10px] sm:text-xs font-mono uppercase tracking-widest text-[#606060]">
             <span className="flex items-center gap-2"><Target size={14} className="text-[#cc1f1f]" weight="fill" /> Concursos públicos</span>
             <span className="hidden sm:block h-3 w-px bg-[#2a2a2a]" />
-            <span className="flex items-center gap-2"><ShieldCheck size={14} className="text-[#cc1f1f]" weight="fill" /> Mentoria 1:1</span>
+            <span className="flex items-center gap-2"><ShieldCheck size={14} className="text-[#cc1f1f]" weight="fill" /> Aprovado aos 17</span>
             <span className="hidden sm:block h-3 w-px bg-[#2a2a2a]" />
-            <span className="flex items-center gap-2"><TrendUp size={14} className="text-[#cc1f1f]" weight="fill" /> Hub em expansão</span>
+            <span className="flex items-center gap-2"><TrendUp size={14} className="text-[#cc1f1f]" weight="fill" /> Milhares de alunos</span>
           </motion.div>
         </motion.div>
 
@@ -218,10 +220,10 @@ function Hero() {
 
 function MetricsStrip() {
   const items = [
-    { n: "5+", label: "Planos ativos" },
-    { n: "1:1", label: "Mentoria individual" },
+    { n: "17", label: "Anos — passou no concurso" },
+    { n: "Milhares", label: "De alunos ajudados" },
+    { n: "5+", label: "Planos da aprovação" },
     { n: "24h", label: "Suporte no WhatsApp" },
-    { n: "+", label: "Novas carreiras em breve" },
   ];
   return (
     <section className="section-reveal border-y border-[#1f1f1f] bg-[#0d0d0d]">
@@ -260,19 +262,19 @@ function Deliverables() {
           <div className="lg:sticky lg:top-32 lg:self-start">
             <span className="text-[10px] font-semibold uppercase tracking-[0.3em] text-[#cc1f1f] font-mono">⊕ Você vai receber</span>
             <h2 className="mt-4 font-display font-bold uppercase tracking-tight text-white text-3xl sm:text-4xl md:text-5xl leading-[0.95]">
-              Mentoria + método
+              Mentoria + material
               <br />
-              <span className="text-[#cc1f1f]">em um só lugar.</span>
+              <span className="text-[#cc1f1f]">de qualidade.</span>
             </h2>
             <p className="mt-6 text-[#a0a0a0] max-w-[40ch] leading-relaxed text-sm sm:text-base">
-              Vale para qualquer concurso público no hub: mentoria individual ou curso da sua corporação, com estratégia, cronograma e correção — Paiva no seu WhatsApp.
+              Concurso público exige <span className="text-white">direção</span> e <span className="text-white">material de qualidade</span> — cursos, bancos de questões, simulados e mentoria com o Paiva no seu WhatsApp.
             </p>
 
             <div className="mt-8 border-l-2 border-[#cc1f1f] bg-[#cc1f1f]/5 px-5 py-4">
               <div className="flex items-start gap-3">
                 <Warning size={20} weight="fill" className="text-[#cc1f1f] shrink-0 mt-0.5" />
                 <p className="text-sm text-white leading-relaxed">
-                  O hub cresce com novos editais — hoje PM em destaque, <span className="font-semibold">mais carreiras chegando</span> sem mudar o método.
+                  O Paiva passou no concurso aos 17 anos. Hoje ajuda milhares a passar pelo <span className="font-semibold">mesmo caminho</span> — com o que faltava na preparação dele.
                 </p>
               </div>
             </div>
@@ -311,45 +313,57 @@ function Deliverables() {
   );
 }
 
-type ProductCorp = "PMAL" | "PMPE" | "PMBA" | "PMSP" | "PREMIUM";
+type ProductCorp = "PMAL" | "PMPE" | "PMBA" | "PMSP";
 type Product = {
   corp: ProductCorp;
   title: string;
   desc: string;
-  price: string;
-  installments: string;
+  fullPrice: string;
+  installment: string;
   url: string;
 };
 
-const PRODUCTS: Product[] = [
-  { corp: "PMAL", title: "Curso Completo — PMAL", desc: "Curso completo para a Polícia Militar de Alagoas com mentoria direta incluída.", price: "597", installments: "12x de R$ 59,70", url: PMAL_URL },
-  { corp: "PMPE", title: "Curso Completo — PMPE", desc: "Curso completo para a Polícia Militar de Pernambuco com mentoria direta incluída.", price: "697", installments: "12x de R$ 69,70", url: PMPE_URL },
-  { corp: "PMBA", title: "Curso Completo — PMBA", desc: "Curso completo para a Polícia Militar da Bahia com mentoria direta incluída.", price: "697", installments: "12x de R$ 69,70", url: PMBA_URL },
-  { corp: "PMSP", title: "Curso Completo — PMSP", desc: "Curso completo para a Polícia Militar de São Paulo com mentoria direta incluída.", price: "697", installments: "12x de R$ 69,70", url: PMSP_URL },
-  { corp: "PREMIUM", title: "Curso Premium — Todas as PMs", desc: "Acesso a todos os cursos de Polícia Militar do Brasil em um único plano, com mentoria direta incluída.", price: "797", installments: "12x de R$ 79,70", url: PREMIUM_URL },
+const PM_PRODUCTS: Product[] = [
+  { corp: "PMAL", title: "Curso Completo — PMAL", desc: "Curso completo para a Polícia Militar de Alagoas com mentoria direta incluída.", fullPrice: "597", installment: "12x de R$ 59,70", url: PMAL_URL },
+  { corp: "PMPE", title: "Curso Completo — PMPE", desc: "Curso completo para a Polícia Militar de Pernambuco com mentoria direta incluída.", fullPrice: "697", installment: "12x de R$ 69,70", url: PMPE_URL },
+  { corp: "PMBA", title: "Curso Completo — PMBA", desc: "Curso completo para a Polícia Militar da Bahia com mentoria direta incluída.", fullPrice: "697", installment: "12x de R$ 69,70", url: PMBA_URL },
+  { corp: "PMSP", title: "Curso Completo — PMSP", desc: "Curso completo para a Polícia Militar de São Paulo com mentoria direta incluída.", fullPrice: "697", installment: "12x de R$ 69,70", url: PMSP_URL },
 ];
+
+function PriceDisplay({ installment, fullPrice }: { installment: string; fullPrice: string }) {
+  return (
+    <div>
+      <div className="font-display font-extrabold text-3xl sm:text-4xl md:text-5xl text-white leading-none tracking-tight">
+        {installment}
+      </div>
+      <div className="mt-2 text-[11px] sm:text-xs font-mono uppercase tracking-wider text-[#606060]">
+        ou R$ {fullPrice} à vista
+      </div>
+    </div>
+  );
+}
 
 function Pricing() {
   const [filter, setFilter] = useState<ProductCorp | "ALL">("ALL");
-  const filtered = filter === "ALL" ? PRODUCTS : PRODUCTS.filter((p) => p.corp === filter);
-  const corps: Array<ProductCorp | "ALL"> = ["ALL", "PMAL", "PMPE", "PMBA", "PMSP", "PREMIUM"];
+  const filtered = filter === "ALL" ? PM_PRODUCTS : PM_PRODUCTS.filter((p) => p.corp === filter);
+  const corps: Array<ProductCorp | "ALL"> = ["ALL", "PMAL", "PMPE", "PMBA", "PMSP"];
 
   return (
     <section id="planos" className="section-reveal py-16 sm:py-24 md:py-32 bg-[#0d0d0d] border-y border-[#1f1f1f] relative">
       <div className="absolute inset-0 pointer-events-none" style={{ background: "radial-gradient(ellipse at center top, #cc1f1f15 0%, transparent 50%)" }} />
       <div className="relative max-w-[1280px] mx-auto px-4 md:px-8">
         <div className="max-w-3xl">
-          <span className="text-[10px] font-semibold uppercase tracking-[0.3em] text-[#cc1f1f] font-mono">⊕ Hub de produtos</span>
+          <span className="text-[10px] font-semibold uppercase tracking-[0.3em] text-[#cc1f1f] font-mono">⊕ Planos da aprovação</span>
           <h2 className="mt-4 font-display font-bold uppercase tracking-tight text-white text-3xl sm:text-4xl md:text-5xl leading-[0.95]">
-            Hub de concursos.<br />
-            <span className="text-[#cc1f1f]">Paiva no comando.</span>
+            Planos da aprovação.<br />
+            <span className="text-[#cc1f1f]">Escolha o seu.</span>
           </h2>
           <p className="mt-4 text-[#a0a0a0] max-w-2xl text-sm sm:text-base">
-            Mentoria individual ou curso completo para o edital que você está enfrentando. Hoje com planos para PM em todo o Brasil — novos concursos entram aqui conforme forem abrindo.
+            Concurso público exige direção e material de qualidade. Do plano mais completo ao curso da sua PM — todos com mentoria do Paiva no WhatsApp.
           </p>
         </div>
 
-        {/* Featured card — Mentoria Individual */}
+        {/* Featured card — Premium */}
         <motion.div
           initial={{ opacity: 0, y: 32, scale: 0.98 }}
           whileInView={{ opacity: 1, y: 0, scale: 1 }}
@@ -360,27 +374,27 @@ function Pricing() {
           <div className="absolute inset-0 rounded-sm border-2 border-[#cc1f1f] animate-pulse pointer-events-none" style={{ boxShadow: "0 0 60px #cc1f1f40, inset 0 0 80px #cc1f1f10" }} />
           <div className="relative bg-gradient-to-br from-[#1a0a0a] via-[#140707] to-[#0d0d0d] border-2 border-[#cc1f1f] rounded-sm p-6 sm:p-8 md:p-12">
             <div className="absolute -top-3 left-6 bg-[#cc1f1f] text-white text-[10px] font-bold uppercase tracking-[0.2em] px-3 py-1.5 rounded-sm font-mono flex items-center gap-1.5">
-              <Lightning size={12} weight="fill" /> Mais procurado
+              <Lightning size={12} weight="fill" /> Mais completo
             </div>
             <div className="absolute top-6 right-6 hidden md:inline-flex text-[9px] font-mono uppercase tracking-[0.25em] text-[#cc1f1f] border border-[#cc1f1f]/60 px-2 py-1">
-              Carro-Chefe
+              Premium
             </div>
 
             <div className="grid lg:grid-cols-[1.7fr_1fr] gap-8 lg:gap-12 items-center mt-4">
               <div>
                 <h3 className="font-display font-extrabold text-2xl sm:text-3xl md:text-5xl uppercase text-white tracking-tight leading-[0.95]">
-                  Mentoria Individual<br />
-                  <span className="text-[#cc1f1f]">Até a Prova</span>
+                  Plano Premium<br />
+                  <span className="text-[#cc1f1f]">Todas as PMs</span>
                 </h3>
                 <p className="mt-5 text-[#cfcfcf] leading-relaxed">
-                  Para qualquer concurso público em que você esteja focado. Acompanhamento direto com Matheus Paiva no WhatsApp, cronograma do seu edital, correção semanal e suporte até a prova — ideal para quem já tem material.
+                  O plano mais completo do Alvo Policial. Tudo que você precisa para ser aprovado: cursos de todas as PMs do Brasil, bancos de questões, simulados e mentoria direta com o Paiva no WhatsApp.
                 </p>
                 <ul className="mt-6 space-y-3 text-sm">
                   {[
-                    "Estratégia montada para o SEU edital específico",
-                    "Acesso direto ao mentor via WhatsApp — sem intermediários",
-                    "Correção de simulados semanais com feedback real",
-                    "Suporte até o dia da prova, sem exceção",
+                    "Todos os cursos de Polícia Militar do Brasil",
+                    "Bancos de questões para treino direcionado",
+                    "Simulados com correção e feedback semanal",
+                    "Mentoria direta com o Paiva até a prova",
                   ].map((f) => (
                     <li key={f} className="flex items-start gap-3 text-white">
                       <CheckCircle size={18} weight="fill" className="text-[#cc1f1f] shrink-0 mt-0.5" /> {f}
@@ -390,52 +404,52 @@ function Pricing() {
               </div>
 
               <div className="lg:border-l lg:border-[#cc1f1f]/30 lg:pl-10 flex flex-col items-start lg:items-center text-left lg:text-center">
-                <div className="flex items-baseline gap-2">
-                  <span className="text-2xl font-mono text-[#a0a0a0]">R$</span>
-                  <span className="font-display font-extrabold text-5xl sm:text-7xl text-white leading-none">497</span>
-                </div>
-                <div className="mt-2 text-xs font-mono uppercase tracking-widest text-[#a0a0a0]">
-                  ou 12x de R$ 49,70 no cartão
-                </div>
+                <PriceDisplay installment="12x de R$ 79,70" fullPrice="797" />
                 <a
-                  href={MENTORIA_URL}
+                  href={PREMIUM_URL}
                   target="_blank" rel="noopener noreferrer"
                   className="cta-pulse mt-6 w-full lg:w-auto inline-flex items-center justify-center gap-2 bg-[#cc1f1f] hover:bg-[#e82222] text-white font-bold uppercase tracking-wider text-sm px-8 py-4 rounded-sm transition-all hover:scale-[1.02] active:scale-[0.98] shadow-lg shadow-[#cc1f1f]/40"
                 >
-                  Garantir minha mentoria <ArrowRight size={16} weight="bold" />
+                  Garantir o Premium <ArrowRight size={16} weight="bold" />
                 </a>
                 <p className="mt-3 text-[11px] text-[#909090] max-w-[28ch]">
-                  Acompanhamento individual — não é curso gravado que você assiste sozinho.
+                  Cursos + bancos de questões + simulados + mentoria — tudo em um plano.
                 </p>
               </div>
             </div>
           </div>
         </motion.div>
 
-        {/* Filters */}
-        <div className="mt-12 sm:mt-16 -mx-4 px-4 sm:mx-0 sm:px-0 overflow-x-auto scrollbar-hide">
+        {/* PM courses */}
+        <div className="mt-12 sm:mt-16">
+          <h3 className="font-display font-bold uppercase tracking-tight text-white text-xl sm:text-2xl">
+            Cursos por corporação
+          </h3>
+          <p className="mt-2 text-sm text-[#a0a0a0]">Curso completo da sua PM com mentoria direta incluída.</p>
+        </div>
+
+        <div className="mt-6 -mx-4 px-4 sm:mx-0 sm:px-0 overflow-x-auto scrollbar-hide">
           <div className="flex items-center gap-2 sm:gap-3 min-w-max sm:min-w-0 sm:flex-wrap pb-1">
-          <span className="text-[10px] font-mono uppercase tracking-[0.25em] text-[#606060] mr-1 sm:mr-2 shrink-0">Corporação:</span>
-          {corps.map((c) => {
-            const active = filter === c;
-            return (
-              <button
-                key={c}
-                onClick={() => setFilter(c)}
-                className={`text-xs font-semibold uppercase tracking-wider px-4 py-2.5 min-h-[44px] rounded-sm border transition-all shrink-0 ${
-                  active
-                    ? "bg-[#cc1f1f] border-[#cc1f1f] text-white"
-                    : "border-[#2a2a2a] text-[#a0a0a0] hover:border-[#cc1f1f] hover:text-white"
-                }`}
-              >
-                {c === "ALL" ? "Todos" : c}
-              </button>
-            );
-          })}
+            <span className="text-[10px] font-mono uppercase tracking-[0.25em] text-[#606060] mr-1 sm:mr-2 shrink-0">Corporação:</span>
+            {corps.map((c) => {
+              const active = filter === c;
+              return (
+                <button
+                  key={c}
+                  onClick={() => setFilter(c)}
+                  className={`text-xs font-semibold uppercase tracking-wider px-4 py-2.5 min-h-[44px] rounded-sm border transition-all shrink-0 ${
+                    active
+                      ? "bg-[#cc1f1f] border-[#cc1f1f] text-white"
+                      : "border-[#2a2a2a] text-[#a0a0a0] hover:border-[#cc1f1f] hover:text-white"
+                  }`}
+                >
+                  {c === "ALL" ? "Todos" : c}
+                </button>
+              );
+            })}
           </div>
         </div>
 
-        {/* Product grid */}
         <div className="mt-8 grid md:grid-cols-2 gap-6">
           {filtered.map((p) => (
             <motion.div
@@ -456,16 +470,10 @@ function Pricing() {
               <p className="mt-3 text-sm text-[#a0a0a0] leading-relaxed flex-1">{p.desc}</p>
               <div className="mt-4 flex items-center gap-2 text-sm text-white">
                 <Target size={14} weight="fill" className="text-[#cc1f1f]" />
-                Mentoria direta com Matheus Paiva
+                Mentoria direta com o Paiva inclusa
               </div>
               <div className="mt-6 flex flex-col sm:flex-row sm:items-end justify-between gap-4">
-                <div>
-                  <div className="flex items-baseline gap-1.5">
-                    <span className="text-sm font-mono text-[#a0a0a0]">R$</span>
-                    <span className="font-display font-extrabold text-3xl sm:text-4xl text-white leading-none">{p.price}</span>
-                  </div>
-                  <div className="mt-1 text-[11px] font-mono uppercase tracking-wider text-[#606060]">{p.installments}</div>
-                </div>
+                <PriceDisplay installment={p.installment} fullPrice={p.fullPrice} />
                 <a
                   href={p.url}
                   target="_blank" rel="noopener noreferrer"
@@ -478,8 +486,42 @@ function Pricing() {
           ))}
         </div>
 
+        {/* Mentoria Individual — secondary */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={viewport}
+          transition={{ duration: 0.5, ease: EASE_OUT }}
+          className="mt-10 bg-[#111111] border border-[#2a2a2a] hover:border-[#cc1f1f]/40 rounded-sm p-6 sm:p-8"
+        >
+          <div className="grid md:grid-cols-[1fr_auto] gap-6 items-center">
+            <div>
+              <span className="inline-block text-[10px] font-bold uppercase tracking-[0.2em] text-[#606060] bg-[#1a1a1a] border border-[#2a2a2a] px-2.5 py-1 rounded-sm font-mono">
+                Mentoria individual
+              </span>
+              <h3 className="mt-4 font-display font-bold text-xl sm:text-2xl uppercase text-white tracking-tight">
+                Já tem material? Só precisa de direção.
+              </h3>
+              <p className="mt-3 text-sm text-[#a0a0a0] leading-relaxed max-w-2xl">
+                Para qualquer concurso público. Acompanhamento direto com o Paiva no WhatsApp, cronograma do seu edital, correção semanal e suporte até a prova.
+              </p>
+            </div>
+            <div className="flex flex-col sm:flex-row md:flex-col items-start md:items-end gap-4 shrink-0">
+              <PriceDisplay installment="12x de R$ 49,70" fullPrice="497" />
+              <a
+                href={MENTORIA_URL}
+                target="_blank" rel="noopener noreferrer"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 border border-[#cc1f1f] text-[#cc1f1f] hover:bg-[#cc1f1f] hover:text-white font-semibold uppercase tracking-wider text-xs px-5 py-3.5 min-h-[44px] rounded-sm transition-all active:scale-[0.98]"
+              >
+                Garantir mentoria <ArrowRight size={14} weight="bold" />
+              </a>
+            </div>
+          </div>
+        </motion.div>
+
         <p className="mt-10 text-center text-xs sm:text-sm text-[#606060] font-mono uppercase tracking-widest">
-          Novos planos e carreiras serão adicionados ao hub · acompanhe pelo Instagram
+          Novos planos serão adicionados · acompanhe pelo{" "}
+          <a href={INSTAGRAM_URL} target="_blank" rel="noopener noreferrer" className="text-[#cc1f1f] hover:underline">Instagram</a>
         </p>
       </div>
     </section>
@@ -507,10 +549,10 @@ function Mission() {
           </div>
           <div>
             <p className="text-[#a0a0a0] leading-relaxed text-base sm:text-lg border-l-2 border-[#cc1f1f] pl-4 sm:pl-6">
-              A maioria dos candidatos reprova não por falta de inteligência, mas por <span className="text-white">falta de direção</span>. Estudam sem cronograma, sem correção de simulado, sem ninguém ajustando a rota.
+              Concurso público exige <span className="text-white">direção</span> e <span className="text-white">material de qualidade</span>. A maioria reprova não por falta de inteligência, mas por estudar sem cronograma, sem correção de simulado e sem ninguém ajustando a rota.
             </p>
             <p className="mt-6 text-[#a0a0a0] leading-relaxed text-base sm:text-lg pl-4 sm:pl-6">
-              O Alvo Policial nasceu para auxiliar em <span className="text-white">concursos públicos</span> — começando pelas PMs, com um hub que vai crescer junto com os editais que o Paiva for abrindo.
+              O Paiva passou no concurso aos 17 anos e hoje ajuda <span className="text-white">milhares de candidatos</span> a conquistarem o sonho da aprovação — com o que ele mesmo precisou na preparação.
             </p>
 
             <div className="mt-10 grid sm:grid-cols-3 gap-4">
@@ -534,11 +576,11 @@ function Mission() {
 
 function FAQ() {
   const faqs = [
-    { q: "Qual a diferença entre mentoria e curso completo?", a: "A mentoria individual (R$ 497) é para quem já tem material — o Paiva monta seu cronograma, corrige simulados e acompanha via WhatsApp até a prova. Os cursos completos incluem plataforma + mentoria direta para a corporação escolhida (PMAL, PMPE, PMBA, PMSP ou Premium)." },
+    { q: "Qual a diferença entre os planos?", a: "O Premium é o mais completo: todos os cursos de PM, bancos de questões, simulados e mentoria. Os cursos por corporação (PMAL, PMPE, PMBA, PMSP) incluem curso completo + mentoria direta. A mentoria individual é para quem já tem material e só precisa de direção." },
     { q: "Posso estudar pelo celular?", a: "Sim. A plataforma funciona em qualquer dispositivo e o acompanhamento com o Paiva é direto no WhatsApp — onde a maioria dos alunos já interage." },
-    { q: "Qual plano é ideal para mim?", a: "Se você já tem material de estudo, a mentoria individual serve para qualquer concurso público. Se quer curso + mentoria para PM, escolha PMAL, PMPE, PMBA ou PMSP. O Premium dá acesso a todas as PMs do Brasil." },
-    { q: "Vão ter planos para outras carreiras?", a: "Sim. O hub foi pensado para crescer — hoje o foco está nas PMs, mas novos planos entram conforme novos editais e concursos forem abrindo. A mentoria individual já atende qualquer concurso público." },
-    { q: "O Paiva acompanha de perto mesmo?", a: "Sim. A mentoria é individual — não é curso gravado que você assiste sozinho. Correção de simulado toda semana e suporte direto até o dia da prova." },
+    { q: "Qual plano é ideal para mim?", a: "Quer tudo em um só lugar? Vá de Premium. Quer focar em uma PM específica? Escolha o curso da sua corporação. Já tem material de estudo? A mentoria individual serve para qualquer concurso público." },
+    { q: "Vão ter planos para outras carreiras?", a: "Sim. Novos planos entram nos Planos da Aprovação conforme novos editais forem abrindo. A mentoria individual já atende qualquer concurso público." },
+    { q: "O Paiva acompanha de perto mesmo?", a: "Sim. Policial militar, aprovado aos 17 anos — ele já passou pelo que você está passando. A mentoria é individual, com correção de simulado toda semana e suporte direto até o dia da prova." },
     { q: "Como falo com o Paiva?", a: "Direto pelo WhatsApp: (82) 9 9687-8311" },
   ];
   const [openIdx, setOpenIdx] = useState<number | null>(0);
@@ -631,7 +673,7 @@ function AboutPaiva() {
           <div className="absolute -bottom-3 -right-3 w-8 h-8 border-b-2 border-r-2 border-[#cc1f1f]" />
           <img
             src="/paiva.jpeg"
-            alt="Matheus Paiva — Instrutor Alvo Policial"
+            alt="Paiva — Instrutor Alvo Policial"
             loading="lazy"
             decoding="async"
             className="relative w-full aspect-[3/4] object-cover object-top contrast-[1.05]"
@@ -645,13 +687,13 @@ function AboutPaiva() {
         <div>
           <span className="text-[10px] font-semibold uppercase tracking-[0.3em] text-[#cc1f1f] font-mono">⊕ Quem te treina</span>
           <h2 className="mt-4 font-display font-bold uppercase tracking-tight text-white text-3xl sm:text-4xl md:text-5xl leading-[0.95]">
-            Matheus Paiva.<br /><span className="text-[#cc1f1f]">Policial.</span><br />Seu mentor.
+            Paiva.<br /><span className="text-[#cc1f1f]">Policial militar.</span><br />Seu mentor.
           </h2>
           <p className="mt-6 text-[#a0a0a0] leading-relaxed text-base sm:text-lg">
-            Quem te ensina precisa ter passado pelo que você quer passar. Paiva é policial militar e criou o <span className="text-white font-semibold">Alvo Policial</span> para auxiliar candidatos de <span className="text-white">concurso público</span> com o que faltava na preparação dele: <span className="text-white">direção, cronograma e correção de rota</span>.
+            Aprovado no concurso aos <span className="text-white font-semibold">17 anos</span> — o Paiva já passou pelo que você está passando. Hoje, como policial militar, ajuda <span className="text-white font-semibold">milhares de candidatos</span> a conquistarem o sonho da aprovação com o que faltava na preparação dele: <span className="text-white">direção, material de qualidade e correção de rota</span>.
           </p>
           <p className="mt-4 text-[#a0a0a0] leading-relaxed text-sm sm:text-base">
-            Hoje com planos para PM e mentoria para qualquer edital. O hub vai ganhar novos cursos conforme novos concursos surgirem — sempre com Paiva no WhatsApp.
+            Cursos, bancos de questões, simulados e mentoria direta no WhatsApp — para você ser aprovado no concurso dos seus sonhos ainda esse ano.
           </p>
           <div className="mt-8 flex flex-col sm:flex-row gap-3 sm:gap-4">
             <a
@@ -680,7 +722,7 @@ const FEEDBACK_SCREENSHOTS = [
   { src: "/feedbacks/feedback-6.png", alt: "Aluno comemora 84 pontos líquidos no simulado" },
   { src: "/feedbacks/feedback-1.png", alt: "Aluno relata resultados melhores com o acompanhamento" },
   { src: "/feedbacks/feedback-3.png", alt: "Aluno relata 81 pontos seguindo o cronograma da mentoria" },
-  { src: "/feedbacks/feedback-4.png", alt: "Aluno agradece Matheus pelo método de estudo" },
+  { src: "/feedbacks/feedback-4.png", alt: "Aluno agradece o Paiva pelo método de estudo" },
 ];
 
 function Feedbacks() {
@@ -754,10 +796,10 @@ function HeroCTABand() {
       <div className="relative max-w-[1280px] mx-auto px-4 md:px-8 py-12 md:py-14 flex flex-col md:flex-row items-center justify-between gap-6 text-center md:text-left">
         <div>
           <h3 className="font-display font-extrabold uppercase tracking-tight text-white text-2xl sm:text-3xl md:text-5xl leading-[0.95] text-balance">
-            Concurso público exige direção.<br className="hidden sm:block" /> O Paiva entrega.
+            Concurso público exige direção<br className="hidden sm:block" /> e material de qualidade.
           </h3>
           <p className="mt-3 text-white/85 text-sm sm:text-base md:text-lg max-w-2xl">
-            Mentoria para qualquer edital ou curso completo para PM — hub ativo hoje, em expansão amanhã.
+            O Paiva entrega os dois — cursos, simulados, bancos de questões e mentoria até a prova.
           </p>
         </div>
         <a
@@ -773,9 +815,9 @@ function HeroCTABand() {
 
 function UrgencyCTA() {
   const bullets = [
-    "Estudo em 3 meses com cronograma do seu edital",
+    "Cursos, bancos de questões e simulados no Premium",
     "Correção de simulado toda semana — sem enrolação",
-    "Acesso direto ao Matheus Paiva via WhatsApp",
+    "Acesso direto ao Paiva via WhatsApp",
     "Suporte até o dia da prova",
   ];
   return (
@@ -791,7 +833,7 @@ function UrgencyCTA() {
               O edital não espera.<br /><span className="text-[#cc1f1f]">Escolha seu plano agora.</span>
             </h2>
             <p className="mt-5 text-[#a0a0a0] leading-relaxed text-base sm:text-lg max-w-2xl">
-              Concurso público com mentoria individual ou curso da sua corporação — Matheus Paiva no WhatsApp. Vagas limitadas porque o acompanhamento é de perto, aluno por aluno.
+              Seja aprovado ainda esse ano — com direção, material de qualidade e o Paiva no WhatsApp. Vagas limitadas porque o acompanhamento é de perto, aluno por aluno.
             </p>
 
             <ul className="mt-8 grid sm:grid-cols-2 gap-3">
@@ -805,21 +847,20 @@ function UrgencyCTA() {
 
             <div className="mt-10 flex flex-col md:flex-row items-start md:items-center gap-6 md:gap-10">
               <div>
-                <div className="flex items-baseline gap-2">
-                  <span className="text-xl font-mono text-[#a0a0a0]">R$</span>
-                  <span className="font-display font-extrabold text-6xl text-white leading-none">497</span>
+                <div className="font-display font-extrabold text-4xl sm:text-5xl md:text-6xl text-white leading-none">
+                  12x de R$ 79,70
                 </div>
                 <div className="mt-1 text-xs font-mono uppercase tracking-widest text-[#a0a0a0]">
-                  ou 12x de R$ 49,70
+                  ou R$ 797 à vista — Plano Premium
                 </div>
               </div>
               <div className="flex-1 w-full md:w-auto">
                 <a
-                  href={MENTORIA_URL}
+                  href={PREMIUM_URL}
                   target="_blank" rel="noopener noreferrer"
                   className="w-full md:w-auto inline-flex items-center justify-center gap-2 bg-[#cc1f1f] hover:bg-[#e82222] text-white font-bold uppercase tracking-wider text-base px-8 py-5 rounded-sm transition-all active:scale-[0.98] shadow-xl shadow-[#cc1f1f]/40"
                 >
-                  Garantir minha mentoria agora <ArrowRight size={18} weight="bold" />
+                  Garantir o Premium agora <ArrowRight size={18} weight="bold" />
                 </a>
                 <p className="mt-3 text-xs text-[#909090]">
                   Acesso imediato após a confirmação do pagamento.
@@ -847,12 +888,12 @@ function FinalCTA() {
           <Crosshair size={56} weight="thin" className="text-[#cc1f1f] mx-auto" />
         </motion.div>
         <h2 className="mt-8 font-display font-extrabold uppercase tracking-tight text-white text-3xl sm:text-5xl md:text-7xl leading-[0.95] text-balance">
-          Sua aprovação
+          Seja aprovado
           <br />
-          <span className="text-[#cc1f1f]">começa com o plano certo.</span>
+          <span className="text-[#cc1f1f]">ainda esse ano.</span>
         </h2>
         <p className="mt-6 sm:mt-8 text-[#a0a0a0] max-w-xl mx-auto text-base sm:text-lg px-2">
-          Concurso público com quem já trilhou o caminho. Mentoria individual ou curso para PM — Matheus Paiva no seu WhatsApp até a prova.
+          Com quem já passou pelo que você está passando. O Paiva — policial militar, aprovado aos 17 — no seu WhatsApp até a prova.
         </p>
         <div className="mt-8 sm:mt-10 flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center px-2">
           <a
@@ -881,7 +922,7 @@ function Footer() {
         <div>
           <Logo />
           <p className="mt-4 text-[#a0a0a0] text-sm max-w-xs leading-relaxed">
-            Mentoria e cursos para concursos públicos. Hoje com PM — hub em expansão. Com Matheus Paiva.
+            Seja aprovado no concurso dos seus sonhos. Direção, material de qualidade e mentoria com o Paiva.
           </p>
         </div>
         <div>
