@@ -299,110 +299,166 @@ function Deliverables() {
   );
 }
 
+type ProductCorp = "PMAL" | "PMPE" | "PMBA" | "PMSP" | "PREMIUM";
+type Product = {
+  corp: ProductCorp;
+  title: string;
+  desc: string;
+  price: string;
+  installments: string;
+  url: string;
+};
+
+const PRODUCTS: Product[] = [
+  { corp: "PMAL", title: "Curso Completo — PMAL", desc: "Curso completo para a Polícia Militar de Alagoas com mentoria direta incluída.", price: "597", installments: "12x de R$ 59,70", url: PMAL_URL },
+  { corp: "PMPE", title: "Curso Completo — PMPE", desc: "Curso completo para a Polícia Militar de Pernambuco com mentoria direta incluída.", price: "697", installments: "12x de R$ 69,70", url: PMPE_URL },
+  { corp: "PMBA", title: "Curso Completo — PMBA", desc: "Curso completo para a Polícia Militar da Bahia com mentoria direta incluída.", price: "697", installments: "12x de R$ 69,70", url: PMBA_URL },
+  { corp: "PMSP", title: "Curso Completo — PMSP", desc: "Curso completo para a Polícia Militar de São Paulo com mentoria direta incluída.", price: "697", installments: "12x de R$ 69,70", url: PMSP_URL },
+  { corp: "PREMIUM", title: "Curso Premium — Todas as PMs", desc: "Acesso a todos os cursos de Polícia Militar do Brasil em um único plano, com mentoria direta incluída.", price: "797", installments: "12x de R$ 79,70", url: PREMIUM_URL },
+];
+
 function Pricing() {
+  const [filter, setFilter] = useState<ProductCorp | "ALL">("ALL");
+  const filtered = filter === "ALL" ? PRODUCTS : PRODUCTS.filter((p) => p.corp === filter);
+  const corps: Array<ProductCorp | "ALL"> = ["ALL", "PMAL", "PMPE", "PMBA", "PMSP", "PREMIUM"];
+
   return (
     <section id="planos" className="py-24 md:py-32 bg-[#0d0d0d] border-y border-[#1f1f1f] relative">
       <div className="absolute inset-0 pointer-events-none" style={{ background: "radial-gradient(ellipse at center top, #cc1f1f15 0%, transparent 50%)" }} />
       <div className="relative max-w-[1280px] mx-auto px-4 md:px-8">
         <div className="max-w-3xl">
-          <span className="text-[10px] font-semibold uppercase tracking-[0.3em] text-[#cc1f1f] font-mono">⊕ Escolha sua missão</span>
+          <span className="text-[10px] font-semibold uppercase tracking-[0.3em] text-[#cc1f1f] font-mono">⊕ Hub de produtos</span>
           <h2 className="mt-4 font-display font-bold uppercase tracking-tight text-white text-4xl md:text-5xl leading-[0.95]">
-            Planos para quem
-            <br />
-            <span className="text-[#cc1f1f]">não aceita reprovar.</span>
+            Escolha a mentoria certa<br />
+            <span className="text-[#cc1f1f]">para o seu concurso.</span>
           </h2>
+          <p className="mt-4 text-[#a0a0a0] max-w-2xl">
+            Todos os planos incluem mentoria direta com Matheus Paiva. Filtre pela corporação do seu edital.
+          </p>
         </div>
 
-        <div className="mt-16 grid lg:grid-cols-12 gap-6">
-          {/* Plano PMAL */}
-          <motion.div
-            initial={{ opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="lg:col-span-4 bg-[#111111] border border-[#2a2a2a] rounded-sm p-8 flex flex-col"
-          >
-            <span className="inline-block self-start text-[10px] font-semibold uppercase tracking-[0.2em] text-[#cc1f1f] border border-[#cc1f1f]/40 px-2 py-1 rounded-sm font-mono">Foco Total</span>
-            <h3 className="mt-6 font-display font-bold text-3xl uppercase text-white tracking-tight">Plano PMAL<br />60 Dias</h3>
-            <p className="mt-4 text-[#a0a0a0] leading-relaxed text-sm flex-1">
-              Cronograma completo do dia 1 ao dia 60 para bater o edital da PMAL. Método + Revisão + Questões + Estratégia de Prova.
-            </p>
-            <ul className="mt-6 space-y-3 text-sm">
-              {["Cronograma 60 dias PMAL", "Mentoria gravada", "Estratégia de prova", "Acesso 24h"].map((f) => (
-                <li key={f} className="flex items-center gap-3 text-[#f5f5f5]">
-                  <Target size={14} weight="fill" className="text-[#cc1f1f]" /> {f}
-                </li>
-              ))}
-            </ul>
-            <a
-              href={PLAN_PMAL_URL}
-              target="_blank" rel="noopener noreferrer"
-              className="mt-8 inline-flex items-center justify-center gap-2 bg-[#cc1f1f] hover:bg-[#e82222] text-white font-semibold uppercase tracking-wider text-xs px-6 py-3.5 rounded-sm transition-all active:scale-[0.98]"
-            >
-              Quero esse plano <ArrowRight size={14} weight="bold" />
-            </a>
-          </motion.div>
-
-          {/* Combo Premium - destaque */}
-          <motion.div
-            initial={{ opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.1 }}
-            className="lg:col-span-5 relative bg-gradient-to-b from-[#1a0d0d] to-[#111111] border-2 border-[#cc1f1f] rounded-sm p-8 flex flex-col"
-            style={{ boxShadow: "inset 0 0 60px #cc1f1f10" }}
-          >
-            <div className="absolute -top-3 left-8 bg-[#cc1f1f] text-white text-[10px] font-bold uppercase tracking-[0.2em] px-3 py-1.5 rounded-sm font-mono flex items-center gap-1.5">
-              <Lightning size={12} weight="fill" /> Recomendado
+        {/* Featured card — Mentoria Individual */}
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="mt-12 relative rounded-sm overflow-hidden"
+        >
+          <div className="absolute inset-0 rounded-sm border-2 border-[#cc1f1f] animate-pulse pointer-events-none" style={{ boxShadow: "0 0 60px #cc1f1f40, inset 0 0 80px #cc1f1f10" }} />
+          <div className="relative bg-gradient-to-br from-[#1a0a0a] via-[#140707] to-[#0d0d0d] border-2 border-[#cc1f1f] rounded-sm p-8 md:p-12">
+            <div className="absolute -top-3 left-6 bg-[#cc1f1f] text-white text-[10px] font-bold uppercase tracking-[0.2em] px-3 py-1.5 rounded-sm font-mono flex items-center gap-1.5">
+              <Lightning size={12} weight="fill" /> Mais procurado
             </div>
-            <span className="inline-block self-start text-[10px] font-semibold uppercase tracking-[0.2em] text-[#cc1f1f] border border-[#cc1f1f]/40 px-2 py-1 rounded-sm font-mono mt-2">Mais Popular</span>
-            <h3 className="mt-6 font-display font-bold text-4xl uppercase text-white tracking-tight">Combo Policial<br /><span className="text-[#cc1f1f]">Premium</span></h3>
-            <p className="mt-4 text-[#a0a0a0] leading-relaxed text-sm flex-1">
-              Acesso completo para PMAL, PMPE, PMBA + PC Premium. O combo mais completo para quem quer se preparar para múltiplos concursos policiais.
-            </p>
-            <ul className="mt-6 space-y-3 text-sm">
-              {["Cronograma PMAL 60 dias", "PMPE + PMBA inclusos", "PC Premium", "PM Premium", "Mentoria completa 24h"].map((f) => (
-                <li key={f} className="flex items-center gap-3 text-white">
-                  <Target size={14} weight="fill" className="text-[#cc1f1f]" /> {f}
-                </li>
-              ))}
-            </ul>
-            <a
-              href={COMBO_URL}
-              target="_blank" rel="noopener noreferrer"
-              className="mt-8 inline-flex items-center justify-center gap-2 bg-[#cc1f1f] hover:bg-[#e82222] text-white font-semibold uppercase tracking-wider text-sm px-6 py-4 rounded-sm transition-all active:scale-[0.98]"
-            >
-              Quero o combo <ArrowRight size={16} weight="bold" />
-            </a>
-          </motion.div>
+            <div className="absolute top-6 right-6 hidden md:inline-flex text-[9px] font-mono uppercase tracking-[0.25em] text-[#cc1f1f] border border-[#cc1f1f]/60 px-2 py-1">
+              Carro-Chefe
+            </div>
 
-          {/* Mentoria */}
-          <motion.div
-            initial={{ opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.2 }}
-            className="lg:col-span-3 bg-[#111111] border border-[#2a2a2a] rounded-sm p-8 flex flex-col"
-          >
-            <span className="inline-block self-start text-[10px] font-semibold uppercase tracking-[0.2em] text-[#cc1f1f] border border-[#cc1f1f]/40 px-2 py-1 rounded-sm font-mono">Direto</span>
-            <h3 className="mt-6 font-display font-bold text-2xl uppercase text-white tracking-tight">Mentoria<br />PMAL</h3>
-            <p className="mt-4 text-[#a0a0a0] leading-relaxed text-sm flex-1">
-              Mentoria exclusiva PMAL. Acesso direto ao método do Paiva, foco total só na PMAL.
-            </p>
-            <ul className="mt-6 space-y-3 text-sm">
-              {["Mentoria PMAL", "Acesso ao método", "Sem outros concursos"].map((f) => (
-                <li key={f} className="flex items-center gap-3 text-[#f5f5f5]">
-                  <Target size={14} weight="fill" className="text-[#cc1f1f]" /> {f}
-                </li>
-              ))}
-            </ul>
-            <a
-              href={MENTORIA_URL}
-              target="_blank" rel="noopener noreferrer"
-              className="mt-8 inline-flex items-center justify-center gap-2 border border-[#cc1f1f] text-[#cc1f1f] hover:bg-[#cc1f1f] hover:text-white font-semibold uppercase tracking-wider text-xs px-6 py-3.5 rounded-sm transition-all"
+            <div className="grid lg:grid-cols-[1.7fr_1fr] gap-8 lg:gap-12 items-center mt-4">
+              <div>
+                <h3 className="font-display font-extrabold text-3xl md:text-5xl uppercase text-white tracking-tight leading-[0.95]">
+                  Mentoria Individual<br />
+                  <span className="text-[#cc1f1f]">Até a Prova</span>
+                </h3>
+                <p className="mt-5 text-[#cfcfcf] leading-relaxed">
+                  Acompanhamento direto com Matheus Paiva via WhatsApp. Cronograma montado para o SEU edital. Correção de simulados toda semana. Suporte completo até o dia da prova. Sem curso atrelado — ideal para quem já tem material.
+                </p>
+                <ul className="mt-6 space-y-3 text-sm">
+                  {[
+                    "Estratégia montada para o SEU edital específico",
+                    "Acesso direto ao mentor via WhatsApp — sem intermediários",
+                    "Correção de simulados semanais com feedback real",
+                    "Suporte até o dia da prova, sem exceção",
+                  ].map((f) => (
+                    <li key={f} className="flex items-start gap-3 text-white">
+                      <CheckCircle size={18} weight="fill" className="text-[#cc1f1f] shrink-0 mt-0.5" /> {f}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <div className="lg:border-l lg:border-[#cc1f1f]/30 lg:pl-10 flex flex-col items-start lg:items-center text-left lg:text-center">
+                <div className="flex items-baseline gap-2">
+                  <span className="text-2xl font-mono text-[#a0a0a0]">R$</span>
+                  <span className="font-display font-extrabold text-7xl text-white leading-none">497</span>
+                </div>
+                <div className="mt-2 text-xs font-mono uppercase tracking-widest text-[#a0a0a0]">
+                  ou 12x de R$ 49,70 no cartão
+                </div>
+                <a
+                  href={MENTORIA_URL}
+                  target="_blank" rel="noopener noreferrer"
+                  className="mt-6 w-full lg:w-auto inline-flex items-center justify-center gap-2 bg-[#cc1f1f] hover:bg-[#e82222] text-white font-bold uppercase tracking-wider text-sm px-8 py-4 rounded-sm transition-all active:scale-[0.98] shadow-lg shadow-[#cc1f1f]/40"
+                >
+                  Garantir minha mentoria <ArrowRight size={16} weight="bold" />
+                </a>
+                <p className="mt-3 text-[11px] text-[#909090] max-w-[28ch]">
+                  A mesma mentoria que aprovou mais de 300 candidatos em 3 meses ou menos.
+                </p>
+              </div>
+            </div>
+          </div>
+        </motion.div>
+
+        {/* Filters */}
+        <div className="mt-16 flex flex-wrap items-center gap-3">
+          <span className="text-[10px] font-mono uppercase tracking-[0.25em] text-[#606060] mr-2">Corporação:</span>
+          {corps.map((c) => {
+            const active = filter === c;
+            return (
+              <button
+                key={c}
+                onClick={() => setFilter(c)}
+                className={`text-xs font-semibold uppercase tracking-wider px-4 py-2 rounded-sm border transition-all ${
+                  active
+                    ? "bg-[#cc1f1f] border-[#cc1f1f] text-white"
+                    : "border-[#2a2a2a] text-[#a0a0a0] hover:border-[#cc1f1f] hover:text-white"
+                }`}
+              >
+                {c === "ALL" ? "Todos" : c}
+              </button>
+            );
+          })}
+        </div>
+
+        {/* Product grid */}
+        <div className="mt-8 grid md:grid-cols-2 gap-6">
+          {filtered.map((p) => (
+            <motion.div
+              key={p.corp}
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-50px" }}
+              className="bg-[#111111] border border-[#2a2a2a] hover:border-[#cc1f1f]/60 rounded-sm p-7 flex flex-col transition-all hover:scale-[1.01]"
             >
-              Quero a mentoria <ArrowRight size={14} weight="bold" />
-            </a>
-          </motion.div>
+              <span className="inline-block self-start text-[10px] font-bold uppercase tracking-[0.2em] text-[#cc1f1f] bg-[#cc1f1f]/10 border border-[#cc1f1f]/40 px-2.5 py-1 rounded-sm font-mono">
+                {p.corp}
+              </span>
+              <h3 className="mt-5 font-display font-bold text-2xl md:text-3xl uppercase text-white tracking-tight leading-tight">
+                {p.title}
+              </h3>
+              <p className="mt-3 text-sm text-[#a0a0a0] leading-relaxed flex-1">{p.desc}</p>
+              <div className="mt-4 flex items-center gap-2 text-sm text-white">
+                <Target size={14} weight="fill" className="text-[#cc1f1f]" />
+                Mentoria direta com Matheus Paiva
+              </div>
+              <div className="mt-6 flex items-end justify-between gap-4">
+                <div>
+                  <div className="flex items-baseline gap-1.5">
+                    <span className="text-sm font-mono text-[#a0a0a0]">R$</span>
+                    <span className="font-display font-extrabold text-4xl text-white leading-none">{p.price}</span>
+                  </div>
+                  <div className="mt-1 text-[11px] font-mono uppercase tracking-wider text-[#606060]">{p.installments}</div>
+                </div>
+                <a
+                  href={p.url}
+                  target="_blank" rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center gap-2 bg-[#cc1f1f] hover:bg-[#e82222] text-white font-semibold uppercase tracking-wider text-xs px-5 py-3 rounded-sm transition-all active:scale-[0.98]"
+                >
+                  Comprar agora <ArrowRight size={14} weight="bold" />
+                </a>
+              </div>
+            </motion.div>
+          ))}
         </div>
       </div>
     </section>
