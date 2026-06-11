@@ -76,16 +76,17 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
   head: () => ({
     meta: [
       { charSet: "utf-8" },
-      { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Alvo Policial — Bata o Edital da PMAL em 60 Dias" },
-      { name: "description", content: "Método tático de 60 dias focado no que realmente cai na PMAL. Foco, disciplina e resultado." },
+      { name: "viewport", content: "width=device-width, initial-scale=1, viewport-fit=cover" },
+      { title: "Alvo Policial — Mentoria e Cursos para Concursos de PM" },
+      { name: "description", content: "Mentoria individual com Matheus Paiva e cursos para PMAL, PMPE, PMBA, PMSP e Premium. Suporte direto no WhatsApp." },
       { name: "author", content: "Paiva — Alvo Policial" },
-      { property: "og:title", content: "Alvo Policial — Bata o Edital da PMAL em 60 Dias" },
-      { property: "og:description", content: "Método tático de 60 dias focado no que realmente cai na PMAL. Foco, disciplina e resultado." },
+      { property: "og:title", content: "Alvo Policial — Mentoria e Cursos para Concursos de PM" },
+      { property: "og:description", content: "Passe na PM com mentoria individual e cursos completos. Matheus Paiva no seu WhatsApp." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
     ],
     links: [
+      { rel: "preload", href: "/logo.png", as: "image", type: "image/png" },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       { rel: "stylesheet", href: "https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Outfit:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" },
@@ -103,7 +104,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 
 function RootShell({ children }: { children: ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="pt-BR">
       <head>
         <HeadContent />
       </head>

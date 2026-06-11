@@ -1,8 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { motion } from "framer-motion";
-import { useState } from "react";
-import logoAsset from "@/assets/logo.png.asset.json";
-import paivaAsset from "@/assets/paiva.jpeg.asset.json";
+import { motion, useReducedMotion } from "framer-motion";
+import { useEffect, useState } from "react";
+import { FeedbackMasonry } from "@/components/feedback-masonry";
+import { EASE_OUT, fadeUp, scaleIn, slideInLeft, slideInRight, stagger, viewport } from "@/lib/motion";
 import {
   Crosshair,
   Target,
@@ -20,19 +20,18 @@ import {
   Lightning,
   ShieldCheck,
   TrendUp,
-  Quotes,
-  Star,
   Fire,
+  ChatsCircle,
   CheckCircle,
 } from "@phosphor-icons/react";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Alvo Policial — Bata o Edital da PMAL em 60 Dias" },
-      { name: "description", content: "Método tático de 60 dias focado no que realmente cai na PMAL. Foco, disciplina e resultado." },
-      { property: "og:title", content: "Alvo Policial — Bata o Edital da PMAL em 60 Dias" },
-      { property: "og:description", content: "Método tático de 60 dias focado no que realmente cai na PMAL." },
+      { title: "Alvo Policial — Mentoria e Cursos para Concursos de PM" },
+      { name: "description", content: "Mentoria individual com Matheus Paiva e cursos completos para PMAL, PMPE, PMBA, PMSP e todo o Brasil. Cronograma do seu edital e suporte direto no WhatsApp." },
+      { property: "og:title", content: "Alvo Policial — Mentoria e Cursos para Concursos de PM" },
+      { property: "og:description", content: "Passe na PM com mentoria individual, cursos por estado e acompanhamento direto com Matheus Paiva." },
     ],
     links: [{ rel: "canonical", href: "/" }],
   }),
@@ -49,21 +48,34 @@ const PREMIUM_URL = "https://clkdmg.site/pay/pm-premium-paiva";
 const PLAN_PMAL_URL = MENTORIA_URL;
 const INSTAGRAM_URL = "https://www.instagram.com/paiva.alvopolicial/";
 
-const fadeUp = {
-  hidden: { opacity: 0, y: 24 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" as const } },
-};
+const LOGO_SRC = "/logo.png";
 
 function Logo({ className = "" }: { className?: string }) {
   return (
     <div className={`flex items-center ${className}`}>
-      <img src={logoAsset.url} alt="Alvo Policial" className="h-9 md:h-10 w-auto" />
+      <img
+        src={LOGO_SRC}
+        alt="Alvo Policial"
+        width={160}
+        height={40}
+        fetchPriority="high"
+        decoding="async"
+        className="h-8 sm:h-9 md:h-10 w-auto"
+      />
     </div>
   );
 }
 
 function Navbar() {
   const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 24);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
   const links = [
     { label: "Método", href: "#metodo" },
     { label: "Planos", href: "#planos" },
@@ -72,7 +84,7 @@ function Navbar() {
     { label: "Contato", href: "#contato" },
   ];
   return (
-    <header className="fixed top-0 inset-x-0 z-40 backdrop-blur-xl bg-[#0a0a0a]/80 border-b border-[#2a2a2a]">
+    <header className={`fixed top-0 inset-x-0 z-40 backdrop-blur-xl border-b transition-all duration-500 ${scrolled ? "navbar-scrolled" : "bg-[#0a0a0a]/80 border-[#2a2a2a]"}`}>
       <div className="max-w-[1280px] mx-auto px-4 md:px-8 h-16 flex items-center justify-between">
         <a href="#top"><Logo /></a>
         <nav className="hidden md:flex items-center gap-8">
@@ -84,9 +96,9 @@ function Navbar() {
         </nav>
         <a
           href="#planos"
-          className="hidden md:inline-flex items-center gap-2 bg-[#cc1f1f] hover:bg-[#e82222] text-white font-semibold uppercase tracking-wider text-xs px-5 py-2.5 rounded-sm transition-colors"
+          className="hidden sm:inline-flex items-center gap-2 bg-[#cc1f1f] hover:bg-[#e82222] text-white font-semibold uppercase tracking-wider text-[10px] sm:text-xs px-3 sm:px-5 py-2.5 min-h-[44px] rounded-sm transition-all active:scale-[0.98]"
         >
-          Quero ser aprovado <ArrowRight size={14} weight="bold" />
+          Ver planos <ArrowRight size={14} weight="bold" />
         </a>
         <button
           className="md:hidden text-white p-2"
@@ -112,7 +124,7 @@ function Navbar() {
             onClick={() => setOpen(false)}
             className="block text-center bg-[#cc1f1f] text-white font-semibold uppercase tracking-wider text-xs px-5 py-3 rounded-sm"
           >
-            Quero ser aprovado
+            Ver planos e mentoria
           </a>
         </div>
       )}
@@ -121,73 +133,72 @@ function Navbar() {
 }
 
 function Hero() {
+  const reduced = useReducedMotion() ?? false;
+
   return (
-    <section id="top" className="relative min-h-[100dvh] pt-16 overflow-hidden">
+    <section id="top" className="section-reveal relative min-h-[100dvh] pt-16 overflow-hidden pb-8 sm:pb-12">
       {/* Red glow */}
       <div className="absolute inset-0 pointer-events-none" style={{ background: "radial-gradient(ellipse at top left, #cc1f1f18 0%, transparent 55%), radial-gradient(ellipse at bottom right, #cc1f1f10 0%, transparent 50%)" }} />
       {/* Tactical grid */}
       <div className="absolute inset-0 opacity-[0.04] pointer-events-none" style={{ backgroundImage: "linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)", backgroundSize: "80px 80px" }} />
 
-      <div className="relative max-w-[1280px] mx-auto px-4 md:px-8 pt-20 md:pt-28 pb-20 grid lg:grid-cols-[3fr_2fr] gap-12 items-center">
-        <motion.div initial="hidden" animate="show" variants={{ show: { transition: { staggerChildren: 0.12 } } }}>
-          <motion.div variants={fadeUp} className="inline-flex items-center gap-2 border border-[#cc1f1f]/40 bg-[#cc1f1f]/5 px-3 py-1.5 rounded-sm mb-8">
+      <div className="relative max-w-[1280px] mx-auto px-4 md:px-8 pt-12 sm:pt-20 md:pt-28 grid lg:grid-cols-[3fr_2fr] gap-10 lg:gap-12 items-center">
+        <motion.div initial="hidden" animate="show" variants={stagger(0.11)}>
+          <motion.div variants={fadeUp} className="inline-flex items-center gap-2 border border-[#cc1f1f]/40 bg-[#cc1f1f]/5 px-3 py-1.5 rounded-sm mb-6 sm:mb-8">
             <Target size={14} weight="fill" className="text-[#cc1f1f]" />
-            <span className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[#f5f5f5]">Polícia Militar de Alagoas</span>
+            <span className="text-[10px] font-semibold uppercase tracking-[0.15em] sm:tracking-[0.2em] text-[#f5f5f5]">Mentoria · Cursos PM · Todo o Brasil</span>
           </motion.div>
 
-          <motion.h1 variants={fadeUp} className="font-display font-extrabold uppercase tracking-tight text-white leading-[0.9] text-6xl md:text-8xl">
-            Bata o edital
+          <motion.h1 variants={fadeUp} className="font-display font-extrabold uppercase tracking-tight text-white leading-[0.92] text-[2.5rem] sm:text-5xl md:text-7xl lg:text-8xl text-balance">
+            Passe na PM
             <br />
-            <span className="text-[#cc1f1f]">em 60 dias</span>
+            <span className="text-[#cc1f1f]">com o Paiva.</span>
           </motion.h1>
 
-          <motion.p variants={fadeUp} className="mt-8 text-lg md:text-xl text-[#a0a0a0] max-w-[55ch] leading-relaxed">
-            Você não vai estudar todo o edital.
-            <br className="hidden md:block" />
-            <span className="text-white font-medium"> Vai estudar o que realmente importa.</span>
+          <motion.p variants={fadeUp} className="mt-6 sm:mt-8 text-base sm:text-lg md:text-xl text-[#a0a0a0] max-w-[55ch] leading-relaxed">
+            Mentoria individual no WhatsApp e cursos completos para <span className="text-white font-medium">PMAL, PMPE, PMBA, PMSP</span> e Premium — tudo com Matheus Paiva acompanhando de perto.
           </motion.p>
 
-          <motion.p variants={fadeUp} className="mt-3 text-base text-[#606060] max-w-[55ch] leading-relaxed">
-            O seu sonho é possível. O tempo é agora. Foco, disciplina e estratégia vencem.
+          <motion.p variants={fadeUp} className="mt-3 text-sm sm:text-base text-[#606060] max-w-[55ch] leading-relaxed">
+            Cronograma do seu edital, correção de simulado toda semana e suporte até o dia da prova. Você escolhe o plano. Ele monta a estratégia.
           </motion.p>
 
-          <motion.div variants={fadeUp} className="mt-10 flex flex-col sm:flex-row gap-4">
+          <motion.div variants={fadeUp} className="mt-8 sm:mt-10 flex flex-col sm:flex-row gap-3 sm:gap-4">
             <a
-              href={PLAN_PMAL_URL}
-              target="_blank" rel="noopener noreferrer"
-              className="inline-flex items-center justify-center gap-2 bg-[#cc1f1f] hover:bg-[#e82222] text-white font-semibold uppercase tracking-wider text-sm px-8 py-4 rounded-sm transition-all active:scale-[0.98]"
+              href="#planos"
+              className="cta-pulse inline-flex items-center justify-center gap-2 bg-[#cc1f1f] hover:bg-[#e82222] text-white font-semibold uppercase tracking-wider text-sm px-8 py-4 min-h-[48px] rounded-sm transition-all active:scale-[0.98]"
             >
-              Quero começar hoje <ArrowRight size={16} weight="bold" />
+              Ver planos e mentoria <ArrowRight size={16} weight="bold" />
             </a>
             <a
               href={WHATSAPP_URL}
               target="_blank" rel="noopener noreferrer"
-              className="inline-flex items-center justify-center gap-2 border border-[#cc1f1f] text-[#cc1f1f] hover:bg-[#cc1f1f] hover:text-white font-semibold uppercase tracking-wider text-sm px-8 py-4 rounded-sm transition-all"
+              className="inline-flex items-center justify-center gap-2 border border-[#cc1f1f] text-[#cc1f1f] hover:bg-[#cc1f1f] hover:text-white font-semibold uppercase tracking-wider text-sm px-8 py-4 min-h-[48px] rounded-sm transition-all"
             >
               <WhatsappLogo size={16} weight="fill" /> Falar com o Paiva
             </a>
           </motion.div>
 
-          <motion.div variants={fadeUp} className="mt-12 flex flex-wrap items-center gap-x-6 gap-y-3 text-xs font-mono uppercase tracking-widest text-[#606060]">
-            <span className="flex items-center gap-2"><Target size={14} className="text-[#cc1f1f]" weight="fill" /> Foco</span>
-            <span className="h-3 w-px bg-[#2a2a2a]" />
-            <span className="flex items-center gap-2"><ShieldCheck size={14} className="text-[#cc1f1f]" weight="fill" /> Disciplina</span>
-            <span className="h-3 w-px bg-[#2a2a2a]" />
-            <span className="flex items-center gap-2"><TrendUp size={14} className="text-[#cc1f1f]" weight="fill" /> Resultado</span>
+          <motion.div variants={fadeUp} className="mt-8 sm:mt-12 flex flex-wrap items-center gap-x-4 sm:gap-x-6 gap-y-3 text-[10px] sm:text-xs font-mono uppercase tracking-widest text-[#606060]">
+            <span className="flex items-center gap-2"><Target size={14} className="text-[#cc1f1f]" weight="fill" /> 5+ planos PM</span>
+            <span className="hidden sm:block h-3 w-px bg-[#2a2a2a]" />
+            <span className="flex items-center gap-2"><ShieldCheck size={14} className="text-[#cc1f1f]" weight="fill" /> Mentoria direta</span>
+            <span className="hidden sm:block h-3 w-px bg-[#2a2a2a]" />
+            <span className="flex items-center gap-2"><TrendUp size={14} className="text-[#cc1f1f]" weight="fill" /> WhatsApp 24h</span>
           </motion.div>
         </motion.div>
 
         {/* Right visual — crosshair */}
         <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 1, delay: 0.3, ease: "easeOut" }}
+          initial={reduced ? false : { opacity: 0, scale: 0.88 }}
+          animate={reduced ? undefined : { opacity: 1, scale: 1 }}
+          transition={{ duration: 1.1, delay: 0.25, ease: EASE_OUT }}
           className="hidden lg:block relative aspect-square"
         >
-          <div className="absolute inset-0 rounded-full border border-[#cc1f1f]/30 animate-pulse" />
-          <div className="absolute inset-8 rounded-full border border-[#cc1f1f]/50" />
-          <div className="absolute inset-20 rounded-full border-2 border-[#cc1f1f]" />
-          <div className="absolute inset-0 flex items-center justify-center">
+          <div className="crosshair-ring absolute inset-0 rounded-full border border-[#cc1f1f]/30" />
+          <div className="crosshair-ring absolute inset-8 rounded-full border border-[#cc1f1f]/50" style={{ animationDelay: "0.5s" }} />
+          <div className="absolute inset-20 rounded-full border-2 border-[#cc1f1f]/80" />
+          <div className="absolute inset-0 flex items-center justify-center crosshair-spin-slow">
             <Crosshair size={120} weight="thin" className="text-[#cc1f1f]" />
           </div>
           {/* corner brackets */}
@@ -197,7 +208,7 @@ function Hero() {
           <div className="absolute bottom-0 right-0 w-10 h-10 border-b-2 border-r-2 border-[#cc1f1f]" />
           <div className="absolute top-1/2 -left-2 right-auto text-xs font-mono text-[#cc1f1f]">—</div>
           <div className="absolute bottom-4 left-1/2 -translate-x-1/2 text-[10px] font-mono uppercase tracking-[0.3em] text-[#606060]">
-            Target: PMAL · 2026
+            PMAL · PMPE · PMBA · PMSP
           </div>
         </motion.div>
       </div>
@@ -207,25 +218,25 @@ function Hero() {
 
 function MetricsStrip() {
   const items = [
-    { n: "60", label: "Dias de cronograma" },
-    { n: "100%", label: "Foco no que cai" },
-    { n: "24h", label: "Acesso à mentoria" },
-    { n: "1", label: "Objetivo: aprovação" },
+    { n: "5+", label: "Planos de PM" },
+    { n: "1:1", label: "Mentoria individual" },
+    { n: "24h", label: "Suporte no WhatsApp" },
+    { n: "100%", label: "Foco no seu edital" },
   ];
   return (
-    <section className="border-y border-[#1f1f1f] bg-[#0d0d0d]">
-      <div className="max-w-[1280px] mx-auto px-4 md:px-8 grid grid-cols-2 md:grid-cols-4 divide-x divide-[#1f1f1f]">
+    <section className="section-reveal border-y border-[#1f1f1f] bg-[#0d0d0d]">
+      <div className="max-w-[1280px] mx-auto px-2 sm:px-4 md:px-8 grid grid-cols-2 md:grid-cols-4 divide-x divide-[#1f1f1f]">
         {items.map((it, i) => (
           <motion.div
             key={i}
-            initial={{ opacity: 0, y: 12 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: i * 0.08 }}
-            className="px-4 md:px-8 py-8 text-center"
+            initial={{ opacity: 0, y: 16, scale: 0.96 }}
+            whileInView={{ opacity: 1, y: 0, scale: 1 }}
+            viewport={viewport}
+            transition={{ delay: i * 0.08, duration: 0.55, ease: EASE_OUT }}
+            className="px-3 sm:px-4 md:px-8 py-6 sm:py-8 text-center"
           >
-            <div className="font-mono font-semibold text-3xl md:text-4xl text-white">{it.n}</div>
-            <div className="mt-2 text-[10px] uppercase tracking-[0.2em] text-[#606060]">{it.label}</div>
+            <div className="font-mono font-semibold text-2xl sm:text-3xl md:text-4xl text-white">{it.n}</div>
+            <div className="mt-2 text-[9px] sm:text-[10px] uppercase tracking-[0.15em] sm:tracking-[0.2em] text-[#606060] leading-snug">{it.label}</div>
           </motion.div>
         ))}
       </div>
@@ -235,7 +246,7 @@ function MetricsStrip() {
 
 function Deliverables() {
   const items = [
-    { icon: Calendar, title: "Cronograma Completo", desc: "Dia 1 ao Dia 60. Você abre o app e sabe exatamente o que estudar." },
+    { icon: Calendar, title: "Cronograma Personalizado", desc: "Montado para o SEU edital. Você abre e sabe exatamente o que estudar naquele dia." },
     { icon: Brain, title: "Método de Estudo Prático", desc: "Como estudar de verdade — não decorar, internalizar." },
     { icon: ArrowsClockwise, title: "Como Revisar", desc: "Sistema de revisão espaçada que fixa o conteúdo na memória de longo prazo." },
     { icon: ListChecks, title: "Como Fazer Questões", desc: "Treino direcionado à banca. Você aprende a interpretar antes de responder." },
@@ -243,25 +254,25 @@ function Deliverables() {
     { icon: MonitorPlay, title: "Plataforma com Mentoria Gravada", desc: "Mentoria do Paiva disponível 24h, em qualquer dispositivo." },
   ];
   return (
-    <section id="metodo" className="py-24 md:py-32 relative">
+    <section id="metodo" className="section-reveal py-16 sm:py-24 md:py-32 relative">
       <div className="max-w-[1280px] mx-auto px-4 md:px-8">
         <div className="grid lg:grid-cols-[1fr_1.4fr] gap-12 lg:gap-20">
           <div className="lg:sticky lg:top-32 lg:self-start">
             <span className="text-[10px] font-semibold uppercase tracking-[0.3em] text-[#cc1f1f] font-mono">⊕ Você vai receber</span>
-            <h2 className="mt-4 font-display font-bold uppercase tracking-tight text-white text-4xl md:text-5xl leading-[0.95]">
-              Tudo que você precisa
+            <h2 className="mt-4 font-display font-bold uppercase tracking-tight text-white text-3xl sm:text-4xl md:text-5xl leading-[0.95]">
+              Mentoria + método
               <br />
-              <span className="text-[#cc1f1f]">para passar.</span>
+              <span className="text-[#cc1f1f]">em um só lugar.</span>
             </h2>
-            <p className="mt-6 text-[#a0a0a0] max-w-[40ch] leading-relaxed">
-              Sem enrolação, sem material genérico. Cada peça do método foi construída para um único objetivo: te colocar no nome dos aprovados.
+            <p className="mt-6 text-[#a0a0a0] max-w-[40ch] leading-relaxed text-sm sm:text-base">
+              Seja na mentoria individual ou no curso completo da sua corporação, você recebe estratégia, cronograma e correção — com o Paiva no seu WhatsApp.
             </p>
 
             <div className="mt-8 border-l-2 border-[#cc1f1f] bg-[#cc1f1f]/5 px-5 py-4">
               <div className="flex items-start gap-3">
                 <Warning size={20} weight="fill" className="text-[#cc1f1f] shrink-0 mt-0.5" />
                 <p className="text-sm text-white leading-relaxed">
-                  Você <span className="font-semibold">não vai estudar todo o edital</span> — vai estudar o que realmente importa.
+                  Não é curso gravado que você assiste sozinho — é <span className="font-semibold">acompanhamento real</span> até a prova.
                 </p>
               </div>
             </div>
@@ -273,11 +284,12 @@ function Deliverables() {
               return (
                 <motion.div
                   key={i}
-                  initial={{ opacity: 0, y: 16 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: "-50px" }}
-                  transition={{ delay: i * 0.06 }}
-                  className="flex items-start gap-5 py-6 border-t border-[#2a2a2a] first:border-t-0"
+                  initial={{ opacity: 0, x: -20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={viewport}
+                  transition={{ delay: i * 0.07, duration: 0.55, ease: EASE_OUT }}
+                  whileHover={{ x: 4 }}
+                  className="flex items-start gap-5 py-6 border-t border-[#2a2a2a] first:border-t-0 transition-colors hover:border-[#cc1f1f]/20"
                 >
                   <div className="shrink-0 w-12 h-12 rounded-sm bg-[#1a1a1a] border border-[#2a2a2a] flex items-center justify-center">
                     <Icon size={22} weight="duotone" className="text-[#cc1f1f]" />
@@ -323,29 +335,30 @@ function Pricing() {
   const corps: Array<ProductCorp | "ALL"> = ["ALL", "PMAL", "PMPE", "PMBA", "PMSP", "PREMIUM"];
 
   return (
-    <section id="planos" className="py-24 md:py-32 bg-[#0d0d0d] border-y border-[#1f1f1f] relative">
+    <section id="planos" className="section-reveal py-16 sm:py-24 md:py-32 bg-[#0d0d0d] border-y border-[#1f1f1f] relative">
       <div className="absolute inset-0 pointer-events-none" style={{ background: "radial-gradient(ellipse at center top, #cc1f1f15 0%, transparent 50%)" }} />
       <div className="relative max-w-[1280px] mx-auto px-4 md:px-8">
         <div className="max-w-3xl">
           <span className="text-[10px] font-semibold uppercase tracking-[0.3em] text-[#cc1f1f] font-mono">⊕ Hub de produtos</span>
-          <h2 className="mt-4 font-display font-bold uppercase tracking-tight text-white text-4xl md:text-5xl leading-[0.95]">
-            Escolha a mentoria certa<br />
-            <span className="text-[#cc1f1f]">para o seu concurso.</span>
+          <h2 className="mt-4 font-display font-bold uppercase tracking-tight text-white text-3xl sm:text-4xl md:text-5xl leading-[0.95]">
+            Escolha seu plano.<br />
+            <span className="text-[#cc1f1f]">Paiva no comando.</span>
           </h2>
-          <p className="mt-4 text-[#a0a0a0] max-w-2xl">
-            Todos os planos incluem mentoria direta com Matheus Paiva. Filtre pela corporação do seu edital.
+          <p className="mt-4 text-[#a0a0a0] max-w-2xl text-sm sm:text-base">
+            Mentoria individual ou curso completo por estado. Todos com acompanhamento direto do Matheus Paiva — filtre pela corporação do seu edital.
           </p>
         </div>
 
         {/* Featured card — Mentoria Individual */}
         <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          initial={{ opacity: 0, y: 32, scale: 0.98 }}
+          whileInView={{ opacity: 1, y: 0, scale: 1 }}
+          viewport={viewport}
+          transition={{ duration: 0.7, ease: EASE_OUT }}
           className="mt-12 relative rounded-sm overflow-hidden"
         >
           <div className="absolute inset-0 rounded-sm border-2 border-[#cc1f1f] animate-pulse pointer-events-none" style={{ boxShadow: "0 0 60px #cc1f1f40, inset 0 0 80px #cc1f1f10" }} />
-          <div className="relative bg-gradient-to-br from-[#1a0a0a] via-[#140707] to-[#0d0d0d] border-2 border-[#cc1f1f] rounded-sm p-8 md:p-12">
+          <div className="relative bg-gradient-to-br from-[#1a0a0a] via-[#140707] to-[#0d0d0d] border-2 border-[#cc1f1f] rounded-sm p-6 sm:p-8 md:p-12">
             <div className="absolute -top-3 left-6 bg-[#cc1f1f] text-white text-[10px] font-bold uppercase tracking-[0.2em] px-3 py-1.5 rounded-sm font-mono flex items-center gap-1.5">
               <Lightning size={12} weight="fill" /> Mais procurado
             </div>
@@ -355,7 +368,7 @@ function Pricing() {
 
             <div className="grid lg:grid-cols-[1.7fr_1fr] gap-8 lg:gap-12 items-center mt-4">
               <div>
-                <h3 className="font-display font-extrabold text-3xl md:text-5xl uppercase text-white tracking-tight leading-[0.95]">
+                <h3 className="font-display font-extrabold text-2xl sm:text-3xl md:text-5xl uppercase text-white tracking-tight leading-[0.95]">
                   Mentoria Individual<br />
                   <span className="text-[#cc1f1f]">Até a Prova</span>
                 </h3>
@@ -379,7 +392,7 @@ function Pricing() {
               <div className="lg:border-l lg:border-[#cc1f1f]/30 lg:pl-10 flex flex-col items-start lg:items-center text-left lg:text-center">
                 <div className="flex items-baseline gap-2">
                   <span className="text-2xl font-mono text-[#a0a0a0]">R$</span>
-                  <span className="font-display font-extrabold text-7xl text-white leading-none">497</span>
+                  <span className="font-display font-extrabold text-5xl sm:text-7xl text-white leading-none">497</span>
                 </div>
                 <div className="mt-2 text-xs font-mono uppercase tracking-widest text-[#a0a0a0]">
                   ou 12x de R$ 49,70 no cartão
@@ -387,12 +400,12 @@ function Pricing() {
                 <a
                   href={MENTORIA_URL}
                   target="_blank" rel="noopener noreferrer"
-                  className="mt-6 w-full lg:w-auto inline-flex items-center justify-center gap-2 bg-[#cc1f1f] hover:bg-[#e82222] text-white font-bold uppercase tracking-wider text-sm px-8 py-4 rounded-sm transition-all active:scale-[0.98] shadow-lg shadow-[#cc1f1f]/40"
+                  className="cta-pulse mt-6 w-full lg:w-auto inline-flex items-center justify-center gap-2 bg-[#cc1f1f] hover:bg-[#e82222] text-white font-bold uppercase tracking-wider text-sm px-8 py-4 rounded-sm transition-all hover:scale-[1.02] active:scale-[0.98] shadow-lg shadow-[#cc1f1f]/40"
                 >
                   Garantir minha mentoria <ArrowRight size={16} weight="bold" />
                 </a>
                 <p className="mt-3 text-[11px] text-[#909090] max-w-[28ch]">
-                  A mesma mentoria que aprovou mais de 300 candidatos em 3 meses ou menos.
+                  Acompanhamento individual — não é curso gravado que você assiste sozinho.
                 </p>
               </div>
             </div>
@@ -400,15 +413,16 @@ function Pricing() {
         </motion.div>
 
         {/* Filters */}
-        <div className="mt-16 flex flex-wrap items-center gap-3">
-          <span className="text-[10px] font-mono uppercase tracking-[0.25em] text-[#606060] mr-2">Corporação:</span>
+        <div className="mt-12 sm:mt-16 -mx-4 px-4 sm:mx-0 sm:px-0 overflow-x-auto scrollbar-hide">
+          <div className="flex items-center gap-2 sm:gap-3 min-w-max sm:min-w-0 sm:flex-wrap pb-1">
+          <span className="text-[10px] font-mono uppercase tracking-[0.25em] text-[#606060] mr-1 sm:mr-2 shrink-0">Corporação:</span>
           {corps.map((c) => {
             const active = filter === c;
             return (
               <button
                 key={c}
                 onClick={() => setFilter(c)}
-                className={`text-xs font-semibold uppercase tracking-wider px-4 py-2 rounded-sm border transition-all ${
+                className={`text-xs font-semibold uppercase tracking-wider px-4 py-2.5 min-h-[44px] rounded-sm border transition-all shrink-0 ${
                   active
                     ? "bg-[#cc1f1f] border-[#cc1f1f] text-white"
                     : "border-[#2a2a2a] text-[#a0a0a0] hover:border-[#cc1f1f] hover:text-white"
@@ -418,6 +432,7 @@ function Pricing() {
               </button>
             );
           })}
+          </div>
         </div>
 
         {/* Product grid */}
@@ -425,10 +440,12 @@ function Pricing() {
           {filtered.map((p) => (
             <motion.div
               key={p.corp}
-              initial={{ opacity: 0, y: 16 }}
+              initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
-              className="bg-[#111111] border border-[#2a2a2a] hover:border-[#cc1f1f]/60 rounded-sm p-7 flex flex-col transition-all hover:scale-[1.01]"
+              viewport={viewport}
+              transition={{ duration: 0.5, ease: EASE_OUT }}
+              whileHover={{ y: -4, transition: { duration: 0.25 } }}
+              className="bg-[#111111] border border-[#2a2a2a] hover:border-[#cc1f1f]/60 rounded-sm p-5 sm:p-7 flex flex-col transition-[border-color,box-shadow] hover:shadow-[0_12px_40px_rgba(204,31,31,0.08)]"
             >
               <span className="inline-block self-start text-[10px] font-bold uppercase tracking-[0.2em] text-[#cc1f1f] bg-[#cc1f1f]/10 border border-[#cc1f1f]/40 px-2.5 py-1 rounded-sm font-mono">
                 {p.corp}
@@ -441,18 +458,18 @@ function Pricing() {
                 <Target size={14} weight="fill" className="text-[#cc1f1f]" />
                 Mentoria direta com Matheus Paiva
               </div>
-              <div className="mt-6 flex items-end justify-between gap-4">
+              <div className="mt-6 flex flex-col sm:flex-row sm:items-end justify-between gap-4">
                 <div>
                   <div className="flex items-baseline gap-1.5">
                     <span className="text-sm font-mono text-[#a0a0a0]">R$</span>
-                    <span className="font-display font-extrabold text-4xl text-white leading-none">{p.price}</span>
+                    <span className="font-display font-extrabold text-3xl sm:text-4xl text-white leading-none">{p.price}</span>
                   </div>
                   <div className="mt-1 text-[11px] font-mono uppercase tracking-wider text-[#606060]">{p.installments}</div>
                 </div>
                 <a
                   href={p.url}
                   target="_blank" rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center gap-2 bg-[#cc1f1f] hover:bg-[#e82222] text-white font-semibold uppercase tracking-wider text-xs px-5 py-3 rounded-sm transition-all active:scale-[0.98]"
+                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-[#cc1f1f] hover:bg-[#e82222] text-white font-semibold uppercase tracking-wider text-xs px-5 py-3.5 min-h-[44px] rounded-sm transition-all active:scale-[0.98]"
                 >
                   Comprar agora <ArrowRight size={14} weight="bold" />
                 </a>
@@ -469,29 +486,27 @@ function Mission() {
   const pillars = [
     { icon: Target, title: "Foco", desc: "Você sabe exatamente o que estudar cada dia." },
     { icon: ShieldCheck, title: "Disciplina", desc: "O cronograma elimina a indecisão." },
-    { icon: TrendUp, title: "Resultado", desc: "60 dias para transformar esforço em aprovação." },
+    { icon: TrendUp, title: "Resultado", desc: "Estratégia que transforma esforço em evolução nos simulados." },
   ];
   return (
-    <section id="missao" className="py-24 md:py-32 relative">
+    <section id="missao" className="section-reveal py-16 sm:py-24 md:py-32 relative">
       <div className="absolute inset-0 pointer-events-none opacity-30" style={{ background: "radial-gradient(ellipse at bottom right, #cc1f1f20 0%, transparent 60%)" }} />
       <div className="relative max-w-[1280px] mx-auto px-4 md:px-8">
         <div className="grid lg:grid-cols-2 gap-16 items-start">
           <div>
             <span className="text-[10px] font-semibold uppercase tracking-[0.3em] text-[#cc1f1f] font-mono">⊕ O método</span>
-            <h2 className="mt-4 font-display font-bold uppercase tracking-tight text-white text-4xl md:text-6xl leading-[0.95]">
-              Disciplina hoje.
+            <h2 className="mt-4 font-display font-bold uppercase tracking-tight text-white text-3xl sm:text-4xl md:text-6xl leading-[0.95]">
+              Estudar sozinho
               <br />
-              Nome na <span className="text-[#cc1f1f]">PMAL</span>
-              <br />
-              amanhã.
+              custa <span className="text-[#cc1f1f]">caro.</span>
             </h2>
           </div>
           <div>
-            <p className="text-[#a0a0a0] leading-relaxed text-lg border-l-2 border-[#cc1f1f] pl-6">
-              A maioria dos candidatos reprova não por falta de inteligência, mas por <span className="text-white">falta de direção</span>. Estudam tudo sem foco, desperdiçam tempo, chegam na prova sem estratégia.
+            <p className="text-[#a0a0a0] leading-relaxed text-base sm:text-lg border-l-2 border-[#cc1f1f] pl-4 sm:pl-6">
+              A maioria dos candidatos reprova não por falta de inteligência, mas por <span className="text-white">falta de direção</span>. Estudam sem cronograma, sem correção de simulado, sem ninguém ajustando a rota.
             </p>
-            <p className="mt-6 text-[#a0a0a0] leading-relaxed text-lg pl-6">
-              O Alvo Policial resolve isso: um cronograma tático de 60 dias que te coloca nos trilhos do edital, do primeiro ao último dia de preparação.
+            <p className="mt-6 text-[#a0a0a0] leading-relaxed text-base sm:text-lg pl-4 sm:pl-6">
+              O Alvo Policial coloca você com um policial militar no seu WhatsApp: mentoria individual ou curso completo da sua corporação, com estratégia montada para o seu edital.
             </p>
 
             <div className="mt-10 grid sm:grid-cols-3 gap-4">
@@ -515,22 +530,28 @@ function Mission() {
 
 function FAQ() {
   const faqs = [
-    { q: "Funciona mesmo em 60 dias?", a: "O cronograma foi construído para cobrir exatamente o que o CEBRASPE cobra. Em 60 dias você terá estudado o que realmente cai — não o edital inteiro." },
-    { q: "Posso acessar no celular?", a: "Sim, a plataforma funciona em qualquer dispositivo. Mentoria gravada disponível 24h." },
-    { q: "E se eu não passar na primeira tentativa?", a: "O método te ensina a estudar, não só para uma prova. Você sai com ferramentas para qualquer edital futuro." },
-    { q: "Qual a diferença do Combo Premium para o Plano PMAL?", a: "O Plano PMAL é foco total em Alagoas (60 dias). O Combo Premium inclui PMAL, PMPE, PMBA, PM Premium e PC Premium — ideal para quem quer ter mais opções de aprovação." },
+    { q: "Qual a diferença entre mentoria e curso completo?", a: "A mentoria individual (R$ 497) é para quem já tem material — o Paiva monta seu cronograma, corrige simulados e acompanha via WhatsApp até a prova. Os cursos completos incluem plataforma + mentoria direta para a corporação escolhida (PMAL, PMPE, PMBA, PMSP ou Premium)." },
+    { q: "Posso estudar pelo celular?", a: "Sim. A plataforma funciona em qualquer dispositivo e o acompanhamento com o Paiva é direto no WhatsApp — onde a maioria dos alunos já interage." },
+    { q: "Qual plano é ideal para mim?", a: "Se você já tem material de estudo, a mentoria individual é o caminho. Se quer curso + mentoria para uma corporação específica, escolha PMAL, PMPE, PMBA ou PMSP. O Premium dá acesso a todas as PMs do Brasil." },
+    { q: "O Paiva acompanha de perto mesmo?", a: "Sim. A mentoria é individual — não é curso gravado que você assiste sozinho. Correção de simulado toda semana e suporte direto até o dia da prova." },
     { q: "Como falo com o Paiva?", a: "Direto pelo WhatsApp: (82) 9 9687-8311" },
   ];
   const [openIdx, setOpenIdx] = useState<number | null>(0);
   return (
-    <section className="py-24 md:py-32 bg-[#0d0d0d] border-y border-[#1f1f1f]">
+    <section className="section-reveal py-16 sm:py-24 md:py-32 bg-[#0d0d0d] border-y border-[#1f1f1f]">
       <div className="max-w-[900px] mx-auto px-4 md:px-8">
-        <div className="text-center">
+        <motion.div
+          className="text-center"
+          initial="hidden"
+          whileInView="show"
+          viewport={viewport}
+          variants={fadeUp}
+        >
           <span className="text-[10px] font-semibold uppercase tracking-[0.3em] text-[#cc1f1f] font-mono">⊕ FAQ</span>
           <h2 className="mt-4 font-display font-bold uppercase tracking-tight text-white text-4xl md:text-5xl">
             Perguntas <span className="text-[#cc1f1f]">táticas</span>
           </h2>
-        </div>
+        </motion.div>
         <div className="mt-12 divide-y divide-[#2a2a2a] border-y border-[#2a2a2a]">
           {faqs.map((f, i) => {
             const open = openIdx === i;
@@ -538,11 +559,11 @@ function FAQ() {
               <div key={i}>
                 <button
                   onClick={() => setOpenIdx(open ? null : i)}
-                  className="w-full flex items-center justify-between gap-4 py-6 text-left group"
+                  className="w-full flex items-center justify-between gap-3 sm:gap-4 py-5 sm:py-6 text-left group min-h-[56px]"
                 >
-                  <span className="flex items-center gap-4">
-                    <span className="font-mono text-xs text-[#606060]">{String(i + 1).padStart(2, "0")}</span>
-                    <span className="font-semibold text-white group-hover:text-[#cc1f1f] transition-colors">{f.q}</span>
+                  <span className="flex items-center gap-3 sm:gap-4 min-w-0">
+                    <span className="font-mono text-xs text-[#606060] shrink-0">{String(i + 1).padStart(2, "0")}</span>
+                    <span className="font-semibold text-sm sm:text-base text-white group-hover:text-[#cc1f1f] transition-colors">{f.q}</span>
                   </span>
                   <CaretDown size={18} className={`text-[#cc1f1f] shrink-0 transition-transform ${open ? "rotate-180" : ""}`} />
                 </button>
@@ -588,14 +609,14 @@ function CTABand({ headline, sub, button = "Quero começar agora" }: { headline:
 
 function AboutPaiva() {
   return (
-    <section id="paiva" className="py-24 md:py-32 relative overflow-hidden">
+    <section id="paiva" className="section-reveal py-16 sm:py-24 md:py-32 relative overflow-hidden">
       <div className="absolute inset-0 pointer-events-none" style={{ background: "radial-gradient(ellipse at left, #cc1f1f15 0%, transparent 55%)" }} />
       <div className="relative max-w-[1280px] mx-auto px-4 md:px-8 grid lg:grid-cols-[1fr_1.2fr] gap-12 lg:gap-16 items-center">
         <motion.div
-          initial={{ opacity: 0, x: -24 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.7 }}
+          variants={scaleIn}
+          initial="hidden"
+          whileInView="show"
+          viewport={viewport}
           className="relative max-w-md mx-auto lg:mx-0 w-full"
         >
           <div className="absolute -inset-2 border border-[#cc1f1f]/40" />
@@ -604,9 +625,11 @@ function AboutPaiva() {
           <div className="absolute -bottom-3 -left-3 w-8 h-8 border-b-2 border-l-2 border-[#cc1f1f]" />
           <div className="absolute -bottom-3 -right-3 w-8 h-8 border-b-2 border-r-2 border-[#cc1f1f]" />
           <img
-            src={paivaAsset.url}
-            alt="Paiva — Instrutor Alvo Policial"
-            className="relative w-full aspect-[3/4] object-cover grayscale contrast-[1.05] brightness-90"
+            src="/paiva.jpeg"
+            alt="Matheus Paiva — Instrutor Alvo Policial"
+            loading="lazy"
+            decoding="async"
+            className="relative w-full aspect-[3/4] object-cover object-top contrast-[1.05]"
           />
           <div className="absolute bottom-4 left-4 right-4 flex items-end justify-between font-mono uppercase tracking-widest text-[10px] text-white">
             <span className="bg-[#cc1f1f] px-2 py-1">Paiva</span>
@@ -616,23 +639,22 @@ function AboutPaiva() {
 
         <div>
           <span className="text-[10px] font-semibold uppercase tracking-[0.3em] text-[#cc1f1f] font-mono">⊕ Quem te treina</span>
-          <h2 className="mt-4 font-display font-bold uppercase tracking-tight text-white text-4xl md:text-5xl leading-[0.95]">
-            Paiva. <span className="text-[#cc1f1f]">Policial</span><br />que já trilhou
-            <br />o caminho.
+          <h2 className="mt-4 font-display font-bold uppercase tracking-tight text-white text-3xl sm:text-4xl md:text-5xl leading-[0.95]">
+            Matheus Paiva.<br /><span className="text-[#cc1f1f]">Policial.</span><br />Seu mentor.
           </h2>
-          <p className="mt-6 text-[#a0a0a0] leading-relaxed text-lg">
-            Quem te ensina precisa ter andado pelo mesmo terreno. Paiva é policial militar, criou o método <span className="text-white font-semibold">Alvo Policial</span> depois de descobrir, na própria pele, o que separa o aprovado do reprovado: <span className="text-white">direção, método e disciplina</span>.
+          <p className="mt-6 text-[#a0a0a0] leading-relaxed text-base sm:text-lg">
+            Quem te ensina precisa ter vestido a farda. Paiva é policial militar e criou o <span className="text-white font-semibold">Alvo Policial</span> para dar aos candidatos o que ele não teve no começo: <span className="text-white">direção, cronograma e alguém corrigindo a rota</span>.
           </p>
-          <p className="mt-4 text-[#a0a0a0] leading-relaxed">
-            Hoje, centenas de alunos seguem o cronograma de 60 dias e chegam à prova sabendo exatamente o que cai, como revisar e como executar no dia D.
+          <p className="mt-4 text-[#a0a0a0] leading-relaxed text-sm sm:text-base">
+            Na mentoria ou nos cursos, você tem acesso direto a ele no WhatsApp — correção de simulado toda semana e suporte até o dia da prova.
           </p>
-          <div className="mt-8 flex flex-col sm:flex-row gap-4">
+          <div className="mt-8 flex flex-col sm:flex-row gap-3 sm:gap-4">
             <a
-              href={PLAN_PMAL_URL}
+              href="#planos"
               target="_blank" rel="noopener noreferrer"
-              className="inline-flex items-center justify-center gap-2 bg-[#cc1f1f] hover:bg-[#e82222] text-white font-semibold uppercase tracking-wider text-sm px-7 py-3.5 rounded-sm transition-all active:scale-[0.98]"
+              className="inline-flex items-center justify-center gap-2 bg-[#cc1f1f] hover:bg-[#e82222] text-white font-semibold uppercase tracking-wider text-sm px-7 py-3.5 min-h-[48px] rounded-sm transition-all active:scale-[0.98]"
             >
-              Treinar com o Paiva <ArrowRight size={14} weight="bold" />
+              Ver planos com o Paiva <ArrowRight size={14} weight="bold" />
             </a>
             <a
               href={WHATSAPP_URL}
@@ -648,73 +670,69 @@ function AboutPaiva() {
   );
 }
 
+const FEEDBACK_SCREENSHOTS = [
+  { src: "/feedbacks/feedback-2.png", alt: "Aluno relata 99 acertos em simulado de 103 questões" },
+  { src: "/feedbacks/feedback-5.png", alt: "Aluno relata melhora na memorização com as dicas da mentoria" },
+  { src: "/feedbacks/feedback-6.png", alt: "Aluno comemora 84 pontos líquidos no simulado" },
+  { src: "/feedbacks/feedback-1.png", alt: "Aluno relata resultados melhores com o acompanhamento" },
+  { src: "/feedbacks/feedback-3.png", alt: "Aluno relata 81 pontos seguindo o cronograma de 60 dias" },
+  { src: "/feedbacks/feedback-4.png", alt: "Aluno agradece Matheus pelo método de estudo" },
+];
+
 function Feedbacks() {
-  const items = [
-    { name: "Joelma Albuquerque", corp: "PMPE", detail: "Aprovada — 27ª colocada", quote: "Cronograma cirúrgico e correção de simulado toda semana. Saí do zero e fui pra farda em sete meses." },
-    { name: "Raimundo Leal", corp: "PMSP", detail: "Aprovado PMSP — chamada inicial", quote: "Eu já tinha tentado outros cursos, mas o Paiva foi o único que me mostrou o que a banca realmente cobra. Passei na primeira chamada." },
-    { name: "Carlos Henrique", corp: "PMAL", detail: "Aprovado — 3º lugar", quote: "Com o plano do Paiva eu virei o jogo. Parei de estudar solto e me dediquei ao que era essencial. 3 meses depois estava no ranking." },
-    { name: "Fernanda Souza", corp: "PMBA", detail: "Aprovada", quote: "A mentoria individual mudou tudo. Ele via onde eu errava e corrigia na raiz. Passei sem precisar repetir o ciclo de estudos." },
-    { name: "Diego Mendonça", corp: "PMPE", detail: "Aprovado", quote: "Três meses de estudo focado com a mentoria do Matheus. Resultado: aprovado com sobra. O método funciona de verdade." },
-    { name: "Larissa Mota", corp: "PMAL", detail: "Aprovada — chamada inicial", quote: "Nunca pensei que passaria na primeira tentativa. O diferencial foi ter alguém corrigindo meus simulados toda semana e ajustando a rota." },
-  ];
   return (
-    <section id="feedbacks" className="py-24 md:py-32 bg-[#0d0d0d] border-y border-[#1f1f1f] relative overflow-hidden">
+    <section id="feedbacks" className="section-reveal py-16 sm:py-24 md:py-32 bg-[#0d0d0d] border-y border-[#1f1f1f] relative overflow-hidden">
       <div className="absolute inset-0 pointer-events-none" style={{ background: "radial-gradient(ellipse at top right, #cc1f1f15 0%, transparent 55%)" }} />
       <div className="relative max-w-[1280px] mx-auto px-4 md:px-8">
-        <div className="max-w-3xl mb-14">
-          <span className="text-[10px] font-semibold uppercase tracking-[0.3em] text-[#cc1f1f] font-mono">⊕ Aprovados</span>
-          <h2 className="mt-4 font-display font-bold uppercase tracking-tight text-white text-4xl md:text-6xl leading-[0.9]">
-            Eles estudaram.<br />
-            Foram aprovados.<br />
-            <span className="text-[#cc1f1f]">Vestiram a farda.</span>
-          </h2>
-          <p className="mt-6 text-[#a0a0a0] leading-relaxed text-lg">
-            Feedbacks reais de alunos que passaram com a metodologia do Matheus Paiva.
-          </p>
+        <div className="grid lg:grid-cols-[1fr_1.1fr] gap-12 lg:gap-16 items-start mb-12">
+          <motion.div
+            initial="hidden"
+            whileInView="show"
+            viewport={viewport}
+            variants={slideInLeft}
+          >
+            <span className="text-[10px] font-semibold uppercase tracking-[0.3em] text-[#cc1f1f] font-mono">⊕ Na prática</span>
+            <h2 className="mt-4 font-display font-bold uppercase tracking-tight text-white text-3xl sm:text-4xl md:text-6xl leading-[0.9]">
+              O que os alunos<br />
+              mandam no<br />
+              <span className="text-[#cc1f1f]">WhatsApp.</span>
+            </h2>
+          </motion.div>
+          <motion.div
+            initial="hidden"
+            whileInView="show"
+            viewport={viewport}
+            variants={slideInRight}
+          >
+            <p className="text-[#a0a0a0] leading-relaxed text-lg border-l-2 border-[#cc1f1f] pl-6">
+              Prints reais de quem já está na mentoria. Sem roteiro, sem depoimento fabricado — só o que chega no dia a dia do acompanhamento.
+            </p>
+            <div className="mt-6 flex items-center gap-3 pl-6">
+              <ChatsCircle size={22} weight="duotone" className="text-[#cc1f1f] shrink-0" />
+              <p className="text-sm text-[#606060] leading-relaxed">
+                Clique em qualquer print para ampliar e ler a conversa completa.
+              </p>
+            </div>
+          </motion.div>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {items.map((it, i) => (
-            <motion.figure
-              key={i}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ delay: (i % 3) * 0.08 }}
-              className="bg-[#1a1a1a] border border-white/10 rounded-sm p-6 flex flex-col hover:border-[#cc1f1f]/50 transition-colors"
-            >
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-12 rounded-full bg-[#7a1010] flex items-center justify-center text-white font-display font-bold text-lg uppercase shrink-0">
-                  {it.name.charAt(0)}
-                </div>
-                <div className="flex-1 min-w-0">
-                  <div className="font-display font-bold uppercase tracking-tight text-white text-sm">{it.name}</div>
-                  <div className="mt-1 flex items-center gap-2 flex-wrap">
-                    <span className="text-[9px] font-bold uppercase tracking-wider text-white bg-[#cc1f1f] px-2 py-0.5 rounded-sm font-mono">{it.corp}</span>
-                    <span className="text-[10px] font-mono uppercase tracking-wider text-[#a0a0a0]">{it.detail}</span>
-                  </div>
-                </div>
-              </div>
-              <Quotes size={22} weight="fill" className="text-[#cc1f1f] mt-5" />
-              <blockquote className="mt-2 text-[15px] text-white/80 leading-relaxed flex-1">
-                "{it.quote}"
-              </blockquote>
-              <div className="mt-5 pt-4 border-t border-white/10 flex items-center gap-1">
-                {Array.from({ length: 5 }).map((_, k) => (
-                  <Star key={k} size={13} weight="fill" className="text-[#cc1f1f]" />
-                ))}
-              </div>
-            </motion.figure>
-          ))}
+        <FeedbackMasonry shots={FEEDBACK_SCREENSHOTS} />
+
+        <div className="mt-10 flex flex-wrap items-center justify-center gap-x-8 gap-y-3 text-[10px] font-mono uppercase tracking-[0.2em] text-[#606060]">
+          <span className="flex items-center gap-2"><WhatsappLogo size={14} weight="fill" className="text-[#25D366]" /> Conversas reais</span>
+          <span className="hidden sm:block h-3 w-px bg-[#2a2a2a]" />
+          <span className="flex items-center gap-2"><ShieldCheck size={14} weight="fill" className="text-[#cc1f1f]" /> Mentoria individual</span>
+          <span className="hidden sm:block h-3 w-px bg-[#2a2a2a]" />
+          <span className="flex items-center gap-2"><Target size={14} weight="fill" className="text-[#cc1f1f]" /> Feedback semanal</span>
         </div>
 
         <div className="mt-14 text-center">
           <a
             href={MENTORIA_URL}
             target="_blank" rel="noopener noreferrer"
-            className="inline-flex items-center justify-center gap-2 bg-[#cc1f1f] hover:bg-[#e82222] text-white font-bold uppercase tracking-wider text-sm px-8 py-4 rounded-sm transition-all active:scale-[0.98] shadow-lg shadow-[#cc1f1f]/30"
+            className="cta-pulse inline-flex items-center justify-center gap-2 bg-[#cc1f1f] hover:bg-[#e82222] text-white font-bold uppercase tracking-wider text-sm px-8 py-4 rounded-sm transition-all hover:scale-[1.02] active:scale-[0.98] shadow-lg shadow-[#cc1f1f]/30"
           >
-            Eu também quero vestir a farda <ArrowRight size={16} weight="bold" />
+            Quero esse acompanhamento <ArrowRight size={16} weight="bold" />
           </a>
           <p className="mt-3 text-xs font-mono uppercase tracking-widest text-[#606060]">
             Acesso imediato · pagamento seguro
@@ -731,19 +749,18 @@ function HeroCTABand() {
       <div className="absolute inset-0 opacity-[0.08] pointer-events-none" style={{ backgroundImage: "linear-gradient(#000 1px, transparent 1px), linear-gradient(90deg, #000 1px, transparent 1px)", backgroundSize: "40px 40px" }} />
       <div className="relative max-w-[1280px] mx-auto px-4 md:px-8 py-12 md:py-14 flex flex-col md:flex-row items-center justify-between gap-6 text-center md:text-left">
         <div>
-          <h3 className="font-display font-extrabold uppercase tracking-tight text-white text-3xl md:text-5xl leading-[0.95]">
-            3 meses. Método certo.<br className="hidden md:block" /> Farda garantida.
+          <h3 className="font-display font-extrabold uppercase tracking-tight text-white text-2xl sm:text-3xl md:text-5xl leading-[0.95] text-balance">
+            Mentoria ou curso completo.<br className="hidden sm:block" /> Você escolhe. O Paiva guia.
           </h3>
-          <p className="mt-3 text-white/85 text-base md:text-lg max-w-2xl">
-            Mais de 300 candidatos aprovados com a mentoria direta do Matheus Paiva. Você pode ser o próximo.
+          <p className="mt-3 text-white/85 text-sm sm:text-base md:text-lg max-w-2xl">
+            Da mentoria individual ao curso Premium com todas as PMs — cada plano inclui acompanhamento direto com Matheus Paiva.
           </p>
         </div>
         <a
-          href={MENTORIA_URL}
-          target="_blank" rel="noopener noreferrer"
-          className="shrink-0 w-full md:w-auto inline-flex items-center justify-center gap-2 bg-white hover:bg-[#f5f5f5] text-[#cc1f1f] font-bold uppercase tracking-wider text-sm px-7 py-4 rounded-sm transition-all active:scale-[0.98] shadow-xl"
+          href="#planos"
+          className="shrink-0 w-full md:w-auto inline-flex items-center justify-center gap-2 bg-white hover:bg-[#f5f5f5] text-[#cc1f1f] font-bold uppercase tracking-wider text-sm px-7 py-4 min-h-[48px] rounded-sm transition-all active:scale-[0.98] shadow-xl"
         >
-          Quero minha vaga na mentoria <ArrowRight size={16} weight="bold" />
+          Escolher meu plano <ArrowRight size={16} weight="bold" />
         </a>
       </div>
     </section>
@@ -758,19 +775,19 @@ function UrgencyCTA() {
     "Suporte até o dia da prova",
   ];
   return (
-    <section className="py-20 md:py-28 bg-[#0a0a0a]">
+    <section className="py-16 sm:py-20 md:py-28 bg-[#0a0a0a]">
       <div className="max-w-[1100px] mx-auto px-4 md:px-8">
-        <div className="relative bg-[#111111] border border-[#cc1f1f]/40 rounded-sm p-8 md:p-14 overflow-hidden">
+        <div className="relative bg-[#111111] border border-[#cc1f1f]/40 rounded-sm p-6 sm:p-8 md:p-14 overflow-hidden">
           <div className="absolute inset-0 pointer-events-none" style={{ background: "radial-gradient(ellipse at top right, #cc1f1f25 0%, transparent 60%)" }} />
           <div className="relative">
             <span className="inline-flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.3em] text-[#cc1f1f] border border-[#cc1f1f]/60 bg-[#cc1f1f]/10 px-3 py-1.5 rounded-sm font-mono">
               <Fire size={12} weight="fill" /> Vagas limitadas
             </span>
-            <h2 className="mt-5 font-display font-extrabold uppercase tracking-tight text-white text-3xl md:text-5xl leading-[0.95] max-w-3xl">
-              Não deixa o próximo concurso<br /><span className="text-[#cc1f1f]">passar em branco.</span>
+            <h2 className="mt-5 font-display font-extrabold uppercase tracking-tight text-white text-2xl sm:text-3xl md:text-5xl leading-[0.95] max-w-3xl">
+              O edital não espera.<br /><span className="text-[#cc1f1f]">Escolha seu plano agora.</span>
             </h2>
-            <p className="mt-5 text-[#a0a0a0] leading-relaxed text-lg max-w-2xl">
-              A mentoria do Matheus Paiva é individual. Ele acompanha cada aluno de perto — por isso as vagas são limitadas. Se o edital saiu ou está prestes a sair, o momento de agir é agora.
+            <p className="mt-5 text-[#a0a0a0] leading-relaxed text-base sm:text-lg max-w-2xl">
+              Mentoria individual ou curso da sua corporação — com Matheus Paiva no WhatsApp. Vagas limitadas porque o acompanhamento é de perto, aluno por aluno.
             </p>
 
             <ul className="mt-8 grid sm:grid-cols-2 gap-3">
@@ -814,30 +831,36 @@ function UrgencyCTA() {
 
 function FinalCTA() {
   return (
-    <section id="contato" className="py-24 md:py-32 relative overflow-hidden">
+    <section id="contato" className="section-reveal py-16 sm:py-24 md:py-32 relative overflow-hidden">
       <div className="absolute inset-0 pointer-events-none" style={{ background: "radial-gradient(ellipse at center, #cc1f1f25 0%, transparent 60%)" }} />
       <div className="relative max-w-[1280px] mx-auto px-4 md:px-8 text-center">
-        <Crosshair size={56} weight="thin" className="text-[#cc1f1f] mx-auto" />
-        <h2 className="mt-8 font-display font-extrabold uppercase tracking-tight text-white text-5xl md:text-7xl leading-[0.95]">
-          Disciplina hoje.
+        <motion.div
+          initial={{ opacity: 0, scale: 0.8, rotate: -15 }}
+          whileInView={{ opacity: 1, scale: 1, rotate: 0 }}
+          viewport={viewport}
+          transition={{ duration: 0.8, ease: EASE_OUT }}
+        >
+          <Crosshair size={56} weight="thin" className="text-[#cc1f1f] mx-auto" />
+        </motion.div>
+        <h2 className="mt-8 font-display font-extrabold uppercase tracking-tight text-white text-3xl sm:text-5xl md:text-7xl leading-[0.95] text-balance">
+          Sua aprovação
           <br />
-          <span className="text-[#cc1f1f]">Nome na PMAL amanhã.</span>
+          <span className="text-[#cc1f1f]">começa com o plano certo.</span>
         </h2>
-        <p className="mt-8 text-[#a0a0a0] max-w-xl mx-auto text-lg">
-          O edital não espera. Sua aprovação começa agora.
+        <p className="mt-6 sm:mt-8 text-[#a0a0a0] max-w-xl mx-auto text-base sm:text-lg px-2">
+          Mentoria individual ou curso completo — PMAL, PMPE, PMBA, PMSP ou Premium. Matheus Paiva no seu WhatsApp até a prova.
         </p>
-        <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center">
+        <div className="mt-8 sm:mt-10 flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center px-2">
           <a
-            href={PLAN_PMAL_URL}
-            target="_blank" rel="noopener noreferrer"
-            className="inline-flex items-center justify-center gap-2 bg-[#cc1f1f] hover:bg-[#e82222] text-white font-semibold uppercase tracking-wider text-sm px-8 py-4 rounded-sm transition-all active:scale-[0.98]"
+            href="#planos"
+            className="inline-flex items-center justify-center gap-2 bg-[#cc1f1f] hover:bg-[#e82222] text-white font-semibold uppercase tracking-wider text-sm px-8 py-4 min-h-[48px] rounded-sm transition-all active:scale-[0.98]"
           >
-            Garantir minha vaga <ArrowRight size={16} weight="bold" />
+            Escolher meu plano <ArrowRight size={16} weight="bold" />
           </a>
           <a
             href={WHATSAPP_URL}
             target="_blank" rel="noopener noreferrer"
-            className="inline-flex items-center justify-center gap-2 border border-[#cc1f1f] text-[#cc1f1f] hover:bg-[#cc1f1f] hover:text-white font-semibold uppercase tracking-wider text-sm px-8 py-4 rounded-sm transition-all"
+            className="inline-flex items-center justify-center gap-2 border border-[#cc1f1f] text-[#cc1f1f] hover:bg-[#cc1f1f] hover:text-white font-semibold uppercase tracking-wider text-sm px-8 py-4 min-h-[48px] rounded-sm transition-all"
           >
             <WhatsappLogo size={16} weight="fill" /> Falar com o Paiva
           </a>
@@ -854,7 +877,7 @@ function Footer() {
         <div>
           <Logo />
           <p className="mt-4 text-[#a0a0a0] text-sm max-w-xs leading-relaxed">
-            60 dias para transformar seus esforços em aprovação.
+            Mentoria e cursos para concursos de PM em todo o Brasil. Com Matheus Paiva.
           </p>
         </div>
         <div>
@@ -893,14 +916,20 @@ function Footer() {
 
 function FloatingWhats() {
   return (
-    <a
+    <motion.a
       href={WHATSAPP_URL}
-      target="_blank" rel="noopener noreferrer"
-      className="fixed bottom-6 right-6 z-40 bg-[#25D366] hover:bg-[#1ebe5d] text-white w-14 h-14 rounded-full flex items-center justify-center shadow-lg shadow-black/40 transition-all active:scale-95"
+      target="_blank"
+      rel="noopener noreferrer"
+      initial={{ opacity: 0, scale: 0.5, y: 20 }}
+      animate={{ opacity: 1, scale: 1, y: 0 }}
+      transition={{ delay: 1.2, duration: 0.5, ease: EASE_OUT }}
+      whileHover={{ scale: 1.08 }}
+      whileTap={{ scale: 0.95 }}
+      className="fixed bottom-5 right-4 sm:bottom-6 sm:right-6 z-40 bg-[#25D366] hover:bg-[#1ebe5d] text-white w-14 h-14 rounded-full flex items-center justify-center shadow-lg shadow-black/40 safe-bottom"
       aria-label="WhatsApp"
     >
       <WhatsappLogo size={28} weight="fill" />
-    </a>
+    </motion.a>
   );
 }
 
@@ -908,7 +937,7 @@ function Index() {
   return (
     <div className="grain bg-[#0a0a0a] text-[#f5f5f5] min-h-[100dvh]">
       <Navbar />
-      <main>
+      <main className="pb-20 sm:pb-0">
         <Hero />
         <MetricsStrip />
         <HeroCTABand />
