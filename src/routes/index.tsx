@@ -3,10 +3,6 @@ import { motion } from "framer-motion";
 import { useState } from "react";
 import logoAsset from "@/assets/logo.png.asset.json";
 import paivaAsset from "@/assets/paiva.jpeg.asset.json";
-import fb1Asset from "@/assets/fb1.jpeg.asset.json";
-import fb2Asset from "@/assets/fb2.jpeg.asset.json";
-import fb3Asset from "@/assets/fb3.jpeg.asset.json";
-import fb4Asset from "@/assets/fb4.jpeg.asset.json";
 import {
   Crosshair,
   Target,
@@ -27,6 +23,7 @@ import {
   Quotes,
   Star,
   Fire,
+  CheckCircle,
 } from "@phosphor-icons/react";
 
 export const Route = createFileRoute("/")({
@@ -43,9 +40,13 @@ export const Route = createFileRoute("/")({
 });
 
 const WHATSAPP_URL = "https://api.whatsapp.com/send/?phone=558296878311&text=Quero%2520estudar%2520da%2520forma%2520correta%2520e%2520eficiente";
-const PLAN_PMAL_URL = "https://pay.cakto.com.br/3fzyfy8_746505";
-const COMBO_URL = "https://pay.cakto.com.br/rvv7iwp_746940";
-const MENTORIA_URL = "https://pay.cakto.com.br/qgsyoei_776735";
+const MENTORIA_URL = "https://clkdmg.site/pay/paiva-somente-mentoria";
+const PMAL_URL = "https://clkdmg.site/pay/mentoriapaiva";
+const PMPE_URL = "https://clkdmg.site/pay/paiva-pmpe";
+const PMBA_URL = "https://clkdmg.site/pay/paiva-pmba";
+const PMSP_URL = "https://clkdmg.site/pay/paiva-pmesp";
+const PREMIUM_URL = "https://clkdmg.site/pay/pm-premium-paiva";
+const PLAN_PMAL_URL = MENTORIA_URL;
 const INSTAGRAM_URL = "https://www.instagram.com/paiva.alvopolicial/";
 
 const fadeUp = {
