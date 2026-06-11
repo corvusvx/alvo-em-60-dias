@@ -28,10 +28,10 @@ import {
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Alvo Policial — Mentoria e Cursos para Concursos de PM" },
-      { name: "description", content: "Mentoria individual com Matheus Paiva e cursos completos para PMAL, PMPE, PMBA, PMSP e todo o Brasil. Cronograma do seu edital e suporte direto no WhatsApp." },
-      { property: "og:title", content: "Alvo Policial — Mentoria e Cursos para Concursos de PM" },
-      { property: "og:description", content: "Passe na PM com mentoria individual, cursos por estado e acompanhamento direto com Matheus Paiva." },
+      { title: "Alvo Policial — Mentoria para Concursos Públicos" },
+      { name: "description", content: "Mentoria individual e cursos com Matheus Paiva para concursos públicos. Planos para PM em todo o Brasil — e novas carreiras em breve. Suporte direto no WhatsApp." },
+      { property: "og:title", content: "Alvo Policial — Mentoria para Concursos Públicos" },
+      { property: "og:description", content: "Passe no seu concurso com mentoria individual, cursos por edital e acompanhamento direto com Matheus Paiva." },
     ],
     links: [{ rel: "canonical", href: "/" }],
   }),
@@ -146,21 +146,21 @@ function Hero() {
         <motion.div initial="hidden" animate="show" variants={stagger(0.11)}>
           <motion.div variants={fadeUp} className="inline-flex items-center gap-2 border border-[#cc1f1f]/40 bg-[#cc1f1f]/5 px-3 py-1.5 rounded-sm mb-6 sm:mb-8">
             <Target size={14} weight="fill" className="text-[#cc1f1f]" />
-            <span className="text-[10px] font-semibold uppercase tracking-[0.15em] sm:tracking-[0.2em] text-[#f5f5f5]">Mentoria · Cursos PM · Todo o Brasil</span>
+            <span className="text-[10px] font-semibold uppercase tracking-[0.15em] sm:tracking-[0.2em] text-[#f5f5f5]">Concursos públicos · Mentoria · Cursos</span>
           </motion.div>
 
           <motion.h1 variants={fadeUp} className="font-display font-extrabold uppercase tracking-tight text-white leading-[0.92] text-[2.5rem] sm:text-5xl md:text-7xl lg:text-8xl text-balance">
-            Passe na PM
+            Passe no concurso
             <br />
             <span className="text-[#cc1f1f]">com o Paiva.</span>
           </motion.h1>
 
           <motion.p variants={fadeUp} className="mt-6 sm:mt-8 text-base sm:text-lg md:text-xl text-[#a0a0a0] max-w-[55ch] leading-relaxed">
-            Mentoria individual no WhatsApp e cursos completos para <span className="text-white font-medium">PMAL, PMPE, PMBA, PMSP</span> e Premium — tudo com Matheus Paiva acompanhando de perto.
+            Matheus Paiva ajuda candidatos de <span className="text-white font-medium">concurso público</span> com mentoria individual e cursos completos — hoje com planos para <span className="text-white font-medium">PMAL, PMPE, PMBA, PMSP</span> e Premium.
           </motion.p>
 
           <motion.p variants={fadeUp} className="mt-3 text-sm sm:text-base text-[#606060] max-w-[55ch] leading-relaxed">
-            Cronograma do seu edital, correção de simulado toda semana e suporte até o dia da prova. Você escolhe o plano. Ele monta a estratégia.
+            Cronograma do seu edital, correção semanal e suporte até a prova. Novos planos e carreiras entram no hub conforme os editais abrem.
           </motion.p>
 
           <motion.div variants={fadeUp} className="mt-8 sm:mt-10 flex flex-col sm:flex-row gap-3 sm:gap-4">
@@ -180,11 +180,11 @@ function Hero() {
           </motion.div>
 
           <motion.div variants={fadeUp} className="mt-8 sm:mt-12 flex flex-wrap items-center gap-x-4 sm:gap-x-6 gap-y-3 text-[10px] sm:text-xs font-mono uppercase tracking-widest text-[#606060]">
-            <span className="flex items-center gap-2"><Target size={14} className="text-[#cc1f1f]" weight="fill" /> 5+ planos PM</span>
+            <span className="flex items-center gap-2"><Target size={14} className="text-[#cc1f1f]" weight="fill" /> Concursos públicos</span>
             <span className="hidden sm:block h-3 w-px bg-[#2a2a2a]" />
-            <span className="flex items-center gap-2"><ShieldCheck size={14} className="text-[#cc1f1f]" weight="fill" /> Mentoria direta</span>
+            <span className="flex items-center gap-2"><ShieldCheck size={14} className="text-[#cc1f1f]" weight="fill" /> Mentoria 1:1</span>
             <span className="hidden sm:block h-3 w-px bg-[#2a2a2a]" />
-            <span className="flex items-center gap-2"><TrendUp size={14} className="text-[#cc1f1f]" weight="fill" /> WhatsApp 24h</span>
+            <span className="flex items-center gap-2"><TrendUp size={14} className="text-[#cc1f1f]" weight="fill" /> Hub em expansão</span>
           </motion.div>
         </motion.div>
 
@@ -208,7 +208,7 @@ function Hero() {
           <div className="absolute bottom-0 right-0 w-10 h-10 border-b-2 border-r-2 border-[#cc1f1f]" />
           <div className="absolute top-1/2 -left-2 right-auto text-xs font-mono text-[#cc1f1f]">—</div>
           <div className="absolute bottom-4 left-1/2 -translate-x-1/2 text-[10px] font-mono uppercase tracking-[0.3em] text-[#606060]">
-            PMAL · PMPE · PMBA · PMSP
+            PM · Concursos públicos
           </div>
         </motion.div>
       </div>
@@ -218,10 +218,10 @@ function Hero() {
 
 function MetricsStrip() {
   const items = [
-    { n: "5+", label: "Planos de PM" },
+    { n: "5+", label: "Planos ativos" },
     { n: "1:1", label: "Mentoria individual" },
     { n: "24h", label: "Suporte no WhatsApp" },
-    { n: "100%", label: "Foco no seu edital" },
+    { n: "+", label: "Novas carreiras em breve" },
   ];
   return (
     <section className="section-reveal border-y border-[#1f1f1f] bg-[#0d0d0d]">
@@ -265,14 +265,14 @@ function Deliverables() {
               <span className="text-[#cc1f1f]">em um só lugar.</span>
             </h2>
             <p className="mt-6 text-[#a0a0a0] max-w-[40ch] leading-relaxed text-sm sm:text-base">
-              Seja na mentoria individual ou no curso completo da sua corporação, você recebe estratégia, cronograma e correção — com o Paiva no seu WhatsApp.
+              Vale para qualquer concurso público no hub: mentoria individual ou curso da sua corporação, com estratégia, cronograma e correção — Paiva no seu WhatsApp.
             </p>
 
             <div className="mt-8 border-l-2 border-[#cc1f1f] bg-[#cc1f1f]/5 px-5 py-4">
               <div className="flex items-start gap-3">
                 <Warning size={20} weight="fill" className="text-[#cc1f1f] shrink-0 mt-0.5" />
                 <p className="text-sm text-white leading-relaxed">
-                  Não é curso gravado que você assiste sozinho — é <span className="font-semibold">acompanhamento real</span> até a prova.
+                  O hub cresce com novos editais — hoje PM em destaque, <span className="font-semibold">mais carreiras chegando</span> sem mudar o método.
                 </p>
               </div>
             </div>
@@ -341,11 +341,11 @@ function Pricing() {
         <div className="max-w-3xl">
           <span className="text-[10px] font-semibold uppercase tracking-[0.3em] text-[#cc1f1f] font-mono">⊕ Hub de produtos</span>
           <h2 className="mt-4 font-display font-bold uppercase tracking-tight text-white text-3xl sm:text-4xl md:text-5xl leading-[0.95]">
-            Escolha seu plano.<br />
+            Hub de concursos.<br />
             <span className="text-[#cc1f1f]">Paiva no comando.</span>
           </h2>
           <p className="mt-4 text-[#a0a0a0] max-w-2xl text-sm sm:text-base">
-            Mentoria individual ou curso completo por estado. Todos com acompanhamento direto do Matheus Paiva — filtre pela corporação do seu edital.
+            Mentoria individual ou curso completo para o edital que você está enfrentando. Hoje com planos para PM em todo o Brasil — novos concursos entram aqui conforme forem abrindo.
           </p>
         </div>
 
@@ -373,7 +373,7 @@ function Pricing() {
                   <span className="text-[#cc1f1f]">Até a Prova</span>
                 </h3>
                 <p className="mt-5 text-[#cfcfcf] leading-relaxed">
-                  Acompanhamento direto com Matheus Paiva via WhatsApp. Cronograma montado para o SEU edital. Correção de simulados toda semana. Suporte completo até o dia da prova. Sem curso atrelado — ideal para quem já tem material.
+                  Para qualquer concurso público em que você esteja focado. Acompanhamento direto com Matheus Paiva no WhatsApp, cronograma do seu edital, correção semanal e suporte até a prova — ideal para quem já tem material.
                 </p>
                 <ul className="mt-6 space-y-3 text-sm">
                   {[
@@ -477,6 +477,10 @@ function Pricing() {
             </motion.div>
           ))}
         </div>
+
+        <p className="mt-10 text-center text-xs sm:text-sm text-[#606060] font-mono uppercase tracking-widest">
+          Novos planos e carreiras serão adicionados ao hub · acompanhe pelo Instagram
+        </p>
       </div>
     </section>
   );
@@ -506,7 +510,7 @@ function Mission() {
               A maioria dos candidatos reprova não por falta de inteligência, mas por <span className="text-white">falta de direção</span>. Estudam sem cronograma, sem correção de simulado, sem ninguém ajustando a rota.
             </p>
             <p className="mt-6 text-[#a0a0a0] leading-relaxed text-base sm:text-lg pl-4 sm:pl-6">
-              O Alvo Policial coloca você com um policial militar no seu WhatsApp: mentoria individual ou curso completo da sua corporação, com estratégia montada para o seu edital.
+              O Alvo Policial nasceu para auxiliar em <span className="text-white">concursos públicos</span> — começando pelas PMs, com um hub que vai crescer junto com os editais que o Paiva for abrindo.
             </p>
 
             <div className="mt-10 grid sm:grid-cols-3 gap-4">
@@ -532,7 +536,8 @@ function FAQ() {
   const faqs = [
     { q: "Qual a diferença entre mentoria e curso completo?", a: "A mentoria individual (R$ 497) é para quem já tem material — o Paiva monta seu cronograma, corrige simulados e acompanha via WhatsApp até a prova. Os cursos completos incluem plataforma + mentoria direta para a corporação escolhida (PMAL, PMPE, PMBA, PMSP ou Premium)." },
     { q: "Posso estudar pelo celular?", a: "Sim. A plataforma funciona em qualquer dispositivo e o acompanhamento com o Paiva é direto no WhatsApp — onde a maioria dos alunos já interage." },
-    { q: "Qual plano é ideal para mim?", a: "Se você já tem material de estudo, a mentoria individual é o caminho. Se quer curso + mentoria para uma corporação específica, escolha PMAL, PMPE, PMBA ou PMSP. O Premium dá acesso a todas as PMs do Brasil." },
+    { q: "Qual plano é ideal para mim?", a: "Se você já tem material de estudo, a mentoria individual serve para qualquer concurso público. Se quer curso + mentoria para PM, escolha PMAL, PMPE, PMBA ou PMSP. O Premium dá acesso a todas as PMs do Brasil." },
+    { q: "Vão ter planos para outras carreiras?", a: "Sim. O hub foi pensado para crescer — hoje o foco está nas PMs, mas novos planos entram conforme novos editais e concursos forem abrindo. A mentoria individual já atende qualquer concurso público." },
     { q: "O Paiva acompanha de perto mesmo?", a: "Sim. A mentoria é individual — não é curso gravado que você assiste sozinho. Correção de simulado toda semana e suporte direto até o dia da prova." },
     { q: "Como falo com o Paiva?", a: "Direto pelo WhatsApp: (82) 9 9687-8311" },
   ];
@@ -633,7 +638,7 @@ function AboutPaiva() {
           />
           <div className="absolute bottom-4 left-4 right-4 flex items-end justify-between font-mono uppercase tracking-widest text-[10px] text-white">
             <span className="bg-[#cc1f1f] px-2 py-1">Paiva</span>
-            <span className="bg-black/70 px-2 py-1">Instrutor · PM</span>
+            <span className="bg-black/70 px-2 py-1">Mentor · Concurso público</span>
           </div>
         </motion.div>
 
@@ -643,15 +648,14 @@ function AboutPaiva() {
             Matheus Paiva.<br /><span className="text-[#cc1f1f]">Policial.</span><br />Seu mentor.
           </h2>
           <p className="mt-6 text-[#a0a0a0] leading-relaxed text-base sm:text-lg">
-            Quem te ensina precisa ter vestido a farda. Paiva é policial militar e criou o <span className="text-white font-semibold">Alvo Policial</span> para dar aos candidatos o que ele não teve no começo: <span className="text-white">direção, cronograma e alguém corrigindo a rota</span>.
+            Quem te ensina precisa ter passado pelo que você quer passar. Paiva é policial militar e criou o <span className="text-white font-semibold">Alvo Policial</span> para auxiliar candidatos de <span className="text-white">concurso público</span> com o que faltava na preparação dele: <span className="text-white">direção, cronograma e correção de rota</span>.
           </p>
           <p className="mt-4 text-[#a0a0a0] leading-relaxed text-sm sm:text-base">
-            Na mentoria ou nos cursos, você tem acesso direto a ele no WhatsApp — correção de simulado toda semana e suporte até o dia da prova.
+            Hoje com planos para PM e mentoria para qualquer edital. O hub vai ganhar novos cursos conforme novos concursos surgirem — sempre com Paiva no WhatsApp.
           </p>
           <div className="mt-8 flex flex-col sm:flex-row gap-3 sm:gap-4">
             <a
               href="#planos"
-              target="_blank" rel="noopener noreferrer"
               className="inline-flex items-center justify-center gap-2 bg-[#cc1f1f] hover:bg-[#e82222] text-white font-semibold uppercase tracking-wider text-sm px-7 py-3.5 min-h-[48px] rounded-sm transition-all active:scale-[0.98]"
             >
               Ver planos com o Paiva <ArrowRight size={14} weight="bold" />
@@ -675,7 +679,7 @@ const FEEDBACK_SCREENSHOTS = [
   { src: "/feedbacks/feedback-5.png", alt: "Aluno relata melhora na memorização com as dicas da mentoria" },
   { src: "/feedbacks/feedback-6.png", alt: "Aluno comemora 84 pontos líquidos no simulado" },
   { src: "/feedbacks/feedback-1.png", alt: "Aluno relata resultados melhores com o acompanhamento" },
-  { src: "/feedbacks/feedback-3.png", alt: "Aluno relata 81 pontos seguindo o cronograma de 60 dias" },
+  { src: "/feedbacks/feedback-3.png", alt: "Aluno relata 81 pontos seguindo o cronograma da mentoria" },
   { src: "/feedbacks/feedback-4.png", alt: "Aluno agradece Matheus pelo método de estudo" },
 ];
 
@@ -750,10 +754,10 @@ function HeroCTABand() {
       <div className="relative max-w-[1280px] mx-auto px-4 md:px-8 py-12 md:py-14 flex flex-col md:flex-row items-center justify-between gap-6 text-center md:text-left">
         <div>
           <h3 className="font-display font-extrabold uppercase tracking-tight text-white text-2xl sm:text-3xl md:text-5xl leading-[0.95] text-balance">
-            Mentoria ou curso completo.<br className="hidden sm:block" /> Você escolhe. O Paiva guia.
+            Concurso público exige direção.<br className="hidden sm:block" /> O Paiva entrega.
           </h3>
           <p className="mt-3 text-white/85 text-sm sm:text-base md:text-lg max-w-2xl">
-            Da mentoria individual ao curso Premium com todas as PMs — cada plano inclui acompanhamento direto com Matheus Paiva.
+            Mentoria para qualquer edital ou curso completo para PM — hub ativo hoje, em expansão amanhã.
           </p>
         </div>
         <a
@@ -787,7 +791,7 @@ function UrgencyCTA() {
               O edital não espera.<br /><span className="text-[#cc1f1f]">Escolha seu plano agora.</span>
             </h2>
             <p className="mt-5 text-[#a0a0a0] leading-relaxed text-base sm:text-lg max-w-2xl">
-              Mentoria individual ou curso da sua corporação — com Matheus Paiva no WhatsApp. Vagas limitadas porque o acompanhamento é de perto, aluno por aluno.
+              Concurso público com mentoria individual ou curso da sua corporação — Matheus Paiva no WhatsApp. Vagas limitadas porque o acompanhamento é de perto, aluno por aluno.
             </p>
 
             <ul className="mt-8 grid sm:grid-cols-2 gap-3">
@@ -848,7 +852,7 @@ function FinalCTA() {
           <span className="text-[#cc1f1f]">começa com o plano certo.</span>
         </h2>
         <p className="mt-6 sm:mt-8 text-[#a0a0a0] max-w-xl mx-auto text-base sm:text-lg px-2">
-          Mentoria individual ou curso completo — PMAL, PMPE, PMBA, PMSP ou Premium. Matheus Paiva no seu WhatsApp até a prova.
+          Concurso público com quem já trilhou o caminho. Mentoria individual ou curso para PM — Matheus Paiva no seu WhatsApp até a prova.
         </p>
         <div className="mt-8 sm:mt-10 flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center px-2">
           <a
@@ -877,7 +881,7 @@ function Footer() {
         <div>
           <Logo />
           <p className="mt-4 text-[#a0a0a0] text-sm max-w-xs leading-relaxed">
-            Mentoria e cursos para concursos de PM em todo o Brasil. Com Matheus Paiva.
+            Mentoria e cursos para concursos públicos. Hoje com PM — hub em expansão. Com Matheus Paiva.
           </p>
         </div>
         <div>
