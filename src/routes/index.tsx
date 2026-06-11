@@ -911,21 +911,13 @@ function Index() {
       <main>
         <Hero />
         <MetricsStrip />
-        <Deliverables />
-        <CTABand
-          headline="Pare de estudar no escuro. Comece hoje com cronograma pronto."
-          sub="60 dias para virar o jogo. Cada dia que passa é um dia a menos até a prova."
-          button="Garantir minha vaga"
-        />
+        <HeroCTABand />
         <Pricing />
+        <Deliverables />
         <Feedbacks />
+        <UrgencyCTA />
         <Mission />
         <AboutPaiva />
-        <CTABand
-          headline="O edital não espera. Seu concorrente também não."
-          sub="Enquanto você decide, outro candidato já está estudando o que cai. Entre no Alvo Policial agora."
-          button="Quero entrar agora"
-        />
         <FAQ />
         <FinalCTA />
       </main>
