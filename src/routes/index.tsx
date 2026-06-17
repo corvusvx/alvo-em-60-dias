@@ -45,6 +45,7 @@ const PMPE_URL = "https://clkdmg.site/pay/paiva-pmpe";
 const PMBA_URL = "https://clkdmg.site/pay/paiva-pmba";
 const PMSP_URL = "https://clkdmg.site/pay/paiva-pmesp";
 const PREMIUM_URL = "https://clkdmg.site/pay/pm-premium-paiva";
+const PLAN_60_URL = "https://pay.cakto.com.br/3fzyfy8_746505";
 const PLAN_PMAL_URL = PREMIUM_URL;
 const INSTAGRAM_URL = "https://www.instagram.com/paiva.alvopolicial/";
 
