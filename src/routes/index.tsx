@@ -365,13 +365,7 @@ function Pricing() {
         </div>
 
         {/* Featured card — Premium */}
-        <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.1 }}
-          transition={{ duration: 0.7, ease: EASE_OUT }}
-          className="mt-12 relative rounded-sm overflow-hidden"
-        >
+        <div className="mt-12 relative rounded-sm overflow-hidden">
           <div className="absolute inset-0 rounded-sm border-2 border-[#cc1f1f] animate-pulse pointer-events-none" style={{ boxShadow: "0 0 60px #cc1f1f40, inset 0 0 80px #cc1f1f10" }} />
           <div className="relative bg-gradient-to-br from-[#1a0a0a] via-[#140707] to-[#0d0d0d] border-2 border-[#cc1f1f] rounded-sm p-6 sm:p-8 md:p-12">
             <div className="absolute -top-3 left-6 bg-[#cc1f1f] text-white text-[10px] font-bold uppercase tracking-[0.2em] px-3 py-1.5 rounded-sm font-mono flex items-center gap-1.5">
@@ -419,16 +413,10 @@ function Pricing() {
               </div>
             </div>
           </div>
-        </motion.div>
+        </div>
 
         {/* Featured card — Plano 60 Dias PMAL */}
-        <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.1 }}
-          transition={{ duration: 0.6, ease: EASE_OUT }}
-          className="mt-8 relative rounded-sm overflow-hidden"
-        >
+        <div className="mt-8 relative rounded-sm overflow-hidden">
           <div className="relative bg-[#111111] border-2 border-[#cc1f1f]/70 rounded-sm p-6 sm:p-8 md:p-10">
             <div className="absolute -top-3 left-6 bg-[#cc1f1f] text-white text-[10px] font-bold uppercase tracking-[0.2em] px-3 py-1.5 rounded-sm font-mono flex items-center gap-1.5">
               <Fire size={12} weight="fill" /> Método 60 dias
@@ -475,7 +463,7 @@ function Pricing() {
               </div>
             </div>
           </div>
-        </motion.div>
+        </div>
 
         {/* PM courses */}
         <div className="mt-12 sm:mt-16">
