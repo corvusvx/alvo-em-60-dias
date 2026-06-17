@@ -366,9 +366,9 @@ function Pricing() {
 
         {/* Featured card — Premium */}
         <motion.div
-          initial={{ opacity: 0, y: 32, scale: 0.98 }}
-          whileInView={{ opacity: 1, y: 0, scale: 1 }}
-          viewport={viewport}
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.1 }}
           transition={{ duration: 0.7, ease: EASE_OUT }}
           className="mt-12 relative rounded-sm overflow-hidden"
         >
@@ -377,7 +377,7 @@ function Pricing() {
             <div className="absolute -top-3 left-6 bg-[#cc1f1f] text-white text-[10px] font-bold uppercase tracking-[0.2em] px-3 py-1.5 rounded-sm font-mono flex items-center gap-1.5">
               <Lightning size={12} weight="fill" /> Mais completo
             </div>
-            <div className="absolute top-6 right-6 hidden md:inline-flex text-[9px] font-mono uppercase tracking-[0.25em] text-[#cc1f1f] border border-[#cc1f1f]/60 px-2 py-1">
+            <div className="absolute -top-3 right-6 hidden md:inline-flex text-[9px] font-mono uppercase tracking-[0.25em] text-white bg-[#0a0a0a] border border-[#cc1f1f]/60 px-2 py-1.5 rounded-sm">
               Premium
             </div>
 
@@ -415,6 +415,62 @@ function Pricing() {
                 </a>
                 <p className="mt-3 text-[11px] text-[#909090] max-w-[28ch]">
                   Cursos + bancos de questões + simulados + mentoria — tudo em um plano.
+                </p>
+              </div>
+            </div>
+          </div>
+        </motion.div>
+
+        {/* Featured card — Plano 60 Dias PMAL */}
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.1 }}
+          transition={{ duration: 0.6, ease: EASE_OUT }}
+          className="mt-8 relative rounded-sm overflow-hidden"
+        >
+          <div className="relative bg-[#111111] border-2 border-[#cc1f1f]/70 rounded-sm p-6 sm:p-8 md:p-10">
+            <div className="absolute -top-3 left-6 bg-[#cc1f1f] text-white text-[10px] font-bold uppercase tracking-[0.2em] px-3 py-1.5 rounded-sm font-mono flex items-center gap-1.5">
+              <Fire size={12} weight="fill" /> Método 60 dias
+            </div>
+            <div className="absolute -top-3 right-6 hidden md:inline-flex text-[9px] font-mono uppercase tracking-[0.25em] text-white bg-[#0a0a0a] border border-[#cc1f1f]/60 px-2 py-1.5 rounded-sm">
+              PMAL · Edital aberto
+            </div>
+
+            <div className="grid lg:grid-cols-[1.6fr_1fr] gap-8 lg:gap-12 items-center mt-4">
+              <div>
+                <h3 className="font-display font-extrabold text-2xl sm:text-3xl md:text-4xl uppercase text-white tracking-tight leading-[0.95]">
+                  Bata o edital da PMAL<br />
+                  <span className="text-[#cc1f1f]">em 60 dias.</span>
+                </h3>
+                <p className="mt-4 text-[#cfcfcf] leading-relaxed text-sm sm:text-base">
+                  Método tático e direto ao ponto, focado no que realmente cai na PMAL. Cronograma de 60 dias, simulados, banco de questões e mentoria com o Paiva no WhatsApp até o dia da prova.
+                </p>
+                <ul className="mt-5 grid sm:grid-cols-2 gap-x-6 gap-y-2 text-sm">
+                  {[
+                    "Cronograma de 60 dias",
+                    "Mentoria com o Paiva",
+                    "Banco de questões PMAL",
+                    "Simulados + correção",
+                  ].map((f) => (
+                    <li key={f} className="flex items-start gap-2 text-white">
+                      <CheckCircle size={16} weight="fill" className="text-[#cc1f1f] shrink-0 mt-0.5" /> {f}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <div className="lg:border-l lg:border-[#cc1f1f]/30 lg:pl-10 flex flex-col items-start lg:items-center text-left lg:text-center">
+                <PriceDisplay installment="12x de R$ 29,70" fullPrice="297" />
+                <a
+                  href={PLAN_60_URL}
+                  target="_blank" rel="noopener noreferrer"
+                  className="cta-pulse mt-6 w-full lg:w-auto inline-flex items-center justify-center gap-2 bg-[#cc1f1f] hover:bg-[#e82222] text-white font-bold uppercase tracking-wider text-sm px-8 py-4 rounded-sm transition-all hover:scale-[1.02] active:scale-[0.98] shadow-lg shadow-[#cc1f1f]/30"
+                >
+                  Garantir o 60 dias <ArrowRight size={16} weight="bold" />
+                </a>
+                <p className="mt-3 text-[11px] text-[#909090] max-w-[28ch]">
+                  Pagamento via Cakto · acesso imediato após confirmação.
                 </p>
               </div>
             </div>
