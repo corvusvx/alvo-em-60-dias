@@ -107,8 +107,7 @@ html {
 
 /* Section performance */
 .section-reveal {
-  content-visibility: auto;
-  contain-intrinsic-size: auto 600px;
+  /* content-visibility removed: causava saltos de scroll e seções aparentemente vazias ao usar âncoras */
 }
 
 /* Hero crosshair */
@@ -179,10 +178,6 @@ html {
 }
 
 @media (max-width: 639px) {
-  .section-reveal {
-    contain-intrinsic-size: auto 400px;
-  }
-
   .cta-pulse {
     animation: none;
   }
