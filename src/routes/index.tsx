@@ -996,7 +996,7 @@ function FloatingWhats() {
   );
 }
 
-function Index() {
+export default function Index() {
   return (
     <div className="grain bg-[#0a0a0a] text-[#f5f5f5] min-h-[100dvh]">
       <Navbar />
