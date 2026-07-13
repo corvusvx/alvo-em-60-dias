@@ -46,7 +46,6 @@ const PMBA_URL = "https://clkdmg.site/pay/paiva-pmba";
 const PMSP_URL = "https://clkdmg.site/pay/paiva-pmesp";
 const PREMIUM_URL = "https://clkdmg.site/pay/pm-premium-paiva";
 const PLAN_60_URL = "https://pay.cakto.com.br/3fzyfy8_746505";
-const PLAN_PMAL_URL = PREMIUM_URL;
 const INSTAGRAM_URL = "https://www.instagram.com/paiva.alvopolicial/";
 
 const LOGO_SRC = "/logo.png";
@@ -365,7 +364,7 @@ function Pricing() {
         </div>
 
         {/* Featured card — Premium */}
-        <div className="mt-12 relative rounded-sm overflow-hidden">
+        <div className="mt-12 pt-3 relative rounded-sm">
           <div className="absolute inset-0 rounded-sm border-2 border-[#cc1f1f] animate-pulse pointer-events-none" style={{ boxShadow: "0 0 60px #cc1f1f40, inset 0 0 80px #cc1f1f10" }} />
           <div className="relative bg-gradient-to-br from-[#1a0a0a] via-[#140707] to-[#0d0d0d] border-2 border-[#cc1f1f] rounded-sm p-6 sm:p-8 md:p-12">
             <div className="absolute -top-3 left-6 bg-[#cc1f1f] text-white text-[10px] font-bold uppercase tracking-[0.2em] px-3 py-1.5 rounded-sm font-mono flex items-center gap-1.5">
@@ -416,7 +415,7 @@ function Pricing() {
         </div>
 
         {/* Featured card — Plano 60 Dias PMAL */}
-        <div className="mt-8 relative rounded-sm overflow-hidden">
+        <div className="mt-8 pt-3 relative rounded-sm">
           <div className="relative bg-[#111111] border-2 border-[#cc1f1f]/70 rounded-sm p-6 sm:p-8 md:p-10">
             <div className="absolute -top-3 left-6 bg-[#cc1f1f] text-white text-[10px] font-bold uppercase tracking-[0.2em] px-3 py-1.5 rounded-sm font-mono flex items-center gap-1.5">
               <Fire size={12} weight="fill" /> Método 60 dias
@@ -668,32 +667,6 @@ function FAQ() {
             );
           })}
         </div>
-      </div>
-    </section>
-  );
-}
-
-function CTABand({ headline, sub, button = "Quero começar agora" }: { headline: string; sub?: string; button?: string }) {
-  return (
-    <section className="relative border-y border-[#cc1f1f]/30 bg-gradient-to-r from-[#0a0a0a] via-[#1a0707] to-[#0a0a0a] overflow-hidden">
-      <div className="absolute inset-0 opacity-[0.05] pointer-events-none" style={{ backgroundImage: "linear-gradient(#cc1f1f 1px, transparent 1px), linear-gradient(90deg, #cc1f1f 1px, transparent 1px)", backgroundSize: "40px 40px" }} />
-      <div className="relative max-w-[1280px] mx-auto px-4 md:px-8 py-10 md:py-12 flex flex-col md:flex-row items-center justify-between gap-6">
-        <div>
-          <div className="flex items-center gap-2 text-[10px] font-mono uppercase tracking-[0.3em] text-[#cc1f1f]">
-            <Fire size={14} weight="fill" /> Vagas limitadas · turma em andamento
-          </div>
-          <h3 className="mt-2 font-display font-extrabold uppercase tracking-tight text-white text-2xl md:text-3xl leading-tight">
-            {headline}
-          </h3>
-          {sub && <p className="mt-2 text-[#a0a0a0] text-sm max-w-2xl">{sub}</p>}
-        </div>
-        <a
-          href={PLAN_PMAL_URL}
-          target="_blank" rel="noopener noreferrer"
-          className="shrink-0 inline-flex items-center justify-center gap-2 bg-[#cc1f1f] hover:bg-[#e82222] text-white font-bold uppercase tracking-wider text-sm px-7 py-4 rounded-sm transition-all active:scale-[0.98] shadow-lg shadow-[#cc1f1f]/30"
-        >
-          {button} <ArrowRight size={16} weight="bold" />
-        </a>
       </div>
     </section>
   );
